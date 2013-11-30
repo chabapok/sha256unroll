@@ -6,21 +6,22 @@ import java.util.Map;
 public class EndNode extends Node{
     Val v = Val.ANY;
     
-    String name;
     
     public EndNode(String name){
         super(null, null);
-        this.name = name;
-        
+        this.name = name;    
     }
     
     
     
     @Override
     void unroll(Val v){
+        TreeBranchManager.atEnter(this);
         HypotezManager.addDeduction(name, v);
         
-        //System.out.println(" "+name+" node path: ");
+        System.out.println(" "+name+" node path: "+TreeBranchManager.current() );
+        TreeBranchManager.atExit();
+        
         
     }
 

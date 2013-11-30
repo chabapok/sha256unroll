@@ -32,7 +32,7 @@ public class Sha256Unroll {
         
         Node result = new Node(or, m1, m4, m6, m8);result.name = "result";
         
-        Node notResult = new Node(not, result);
+        Node notResult = new Node(not, result); notResult.name = "notResult";
         Hypotez h = HypotezManager.openHypotez(notResult);
         h.values[0] = Val.NULL;
         notResult.unroll( h );
@@ -42,17 +42,23 @@ public class Sha256Unroll {
         println("root hyp count="+HypotezManager.rootHypotez.size());
         
         
-        
-        Map<String, Val> m = new TreeMap();
-        m.put("x1", Val.ONE);
-        m.put("x2", Val.ONE);
-        m.put("x3", Val.ONE);
-        m.put("x4", Val.ONE);
-        Val r = result.calc(m);
-        System.out.println("r="+r);
+        for(int x=0; x<16; x++){
+            Map<String, Val> m = createFor(x);
+            Val r = result.calc(m);
+            System.out.println("x="+x+" r="+r);
+        }
     }
     
     
+    
+    static Map<String, Val> createFor(int v){
+        Map<String, Val> m = new TreeMap();
+        for(int i=1; i<32; i++){
+            m.put("x"+i, ((v&1)==1) ? Val.ONE : Val.NULL );
+            v = v>>1;
+        }
+        return m;
+    }
     
     
 }

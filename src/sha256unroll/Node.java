@@ -25,15 +25,19 @@ public class Node {
     
     
     void unroll(Val v){
+        TreeBranchManager.atEnter(this);
         action.unroll(this, v);
+        TreeBranchManager.atExit();
     }
 
     void unroll(Hypotez h) {
+        TreeBranchManager.atEnter(this);
         int i=0;
         for(Node n : parentNodes){
             n.unroll(h.values[i]);
             i++;
         }
+        TreeBranchManager.atExit();
     }
     
     
