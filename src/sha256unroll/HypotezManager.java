@@ -40,5 +40,9 @@ public class HypotezManager {
     public static void addDeduction(String variable, Val value){
         lastHypotez.addDeduction(variable, value);
     }
+
+    static String branchPath() {
+        return lastHypotez.branchPath();
+    }
     
 }

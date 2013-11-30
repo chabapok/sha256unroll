@@ -37,18 +37,23 @@ public class Hypotez {
         if (deduction==null){
             println("close hypotez " + num + " is null");
         }else{
-            StringBuilder hypotezBranchPath = new StringBuilder();
-            Hypotez h = this;
-            do{
-                hypotezBranchPath.append(h.node.name).append("<-");
-                h = h.parent;
-            }while(h!=null);
-            
-            println("close hypotez " + num +" for node "+hypotezBranchPath.toString() );
+        
+            println("close hypotez " + num +" for hyp path "+ branchPath() );
             for(Map.Entry<String, Val> e: deduction.entrySet()){
                 println("  "+e.getKey()+" = "+e.getValue() );
             }
         }
         
+    }
+    
+    
+    String branchPath(){
+        StringBuilder hypotezBranchPath = new StringBuilder();
+        Hypotez h = this;
+        do{
+            hypotezBranchPath.append(h.node.name).append("<-");
+            h = h.parent;
+        }while(h!=null);
+        return hypotezBranchPath.toString();
     }
 }

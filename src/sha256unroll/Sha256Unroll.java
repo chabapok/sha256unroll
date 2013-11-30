@@ -1,6 +1,8 @@
 package sha256unroll;
 
 
+import java.util.Map;
+import java.util.TreeMap;
 import static sha256unroll.Utils.*;
 
 public class Sha256Unroll {
@@ -38,6 +40,16 @@ public class Sha256Unroll {
         
         println("hypotez count="+HypotezManager.hypNum);
         println("root hyp count="+HypotezManager.rootHypotez.size());
+        
+        
+        
+        Map<String, Val> m = new TreeMap();
+        m.put("x1", Val.ONE);
+        m.put("x2", Val.ONE);
+        m.put("x3", Val.ONE);
+        m.put("x4", Val.ONE);
+        Val r = result.calc(m);
+        System.out.println("r="+r);
     }
     
     

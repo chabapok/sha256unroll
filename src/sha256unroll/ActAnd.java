@@ -1,5 +1,7 @@
 package sha256unroll;
 
+import java.util.Map;
+
 /**
  *
  * @author Pelepeichenko A.V.
@@ -38,5 +40,16 @@ public class ActAnd implements IAct{
         }
         throw new RuntimeException("v is null");
     }
+
+    
+    @Override
+    public Val calc(Node node, Map<String, Val> v) {        
+        for(Node n: node.parentNodes){
+            Val r = n.calc(v);
+            if (r==Val.NULL) return Val.NULL;
+        }
+        return Val.ONE;
+    }
+
     
 }

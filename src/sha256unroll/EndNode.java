@@ -19,6 +19,9 @@ public class EndNode extends Node{
     @Override
     void unroll(Val v){
         HypotezManager.addDeduction(name, v);
+        
+        //System.out.println(" "+name+" node path: ");
+        
     }
 
     
@@ -30,8 +33,13 @@ public class EndNode extends Node{
 
 
     
+    @Override
     Val calc(Map<String, Val> v){
-        return v.get(name);
+        Val r=v.get(name);
+        if (r==null){
+            System.out.println("WARN: can't find "+name+" in value map");
+        }
+        return r;
     }
 
     
