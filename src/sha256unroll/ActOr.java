@@ -27,7 +27,7 @@ public class ActOr implements IAct{
                 return;
                 
             case ONE:
-                HypotezManager.startHypotezGroup(n);
+                HypotezManager.startHypotezGroup(node);
                 for(int i=0; i<node.parentNodes.size(); i++){
                     Hypotez h =  HypotezManager.openHypotez(node);
                     h.values[i] = Val.ONE;

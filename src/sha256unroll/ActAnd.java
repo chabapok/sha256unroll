@@ -28,7 +28,7 @@ public class ActAnd implements IAct{
                 return;
                 
             case NULL:
-                HypotezManager.startHypotezGroup(n);
+                HypotezManager.startHypotezGroup(node);
                 for(int i=0; i<node.parentNodes.size(); i++){
                     Hypotez h =  HypotezManager.openHypotez(node);
                     h.values[i] = Val.NULL;
