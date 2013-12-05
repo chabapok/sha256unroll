@@ -30,7 +30,15 @@ public class Sha256Unroll {
         Node m7 = new Node(not, x3);        m7.name = "m7";
         Node m8 = new Node(and, m7, x1, x4);m8.name = "m8";
         
-        Node result = new Node(or, m1, m4, m6, m8);result.name = "result";
+        
+        Node m9 = new Node(not, x1); m9.name="m9";
+        Node m10 = new Node(not, x2); m10.name="m10";
+        Node m11 = new Node(not, x3); m11.name="m11";
+        Node m12 = new Node(not, x4); m12.name="m12";
+        Node m13 = new Node(and, m9, m10, m11, m12); m13.name="m13";
+        
+        
+        Node result = new Node(or, m1, m4, m6, m8, m13);result.name = "result";
         
         Node notResult = new Node(not, result); notResult.name = "notResult";
         Hypotez h = HypotezManager.openHypotez(notResult);

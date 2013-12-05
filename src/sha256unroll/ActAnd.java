@@ -28,14 +28,14 @@ public class ActAnd implements IAct{
                 return;
                 
             case NULL:
-                
+                HypotezManager.startHypotezGroup(n);
                 for(int i=0; i<node.parentNodes.size(); i++){
                     Hypotez h =  HypotezManager.openHypotez(node);
                     h.values[i] = Val.NULL;
                     node.unroll(h);
                     h.close();
                 }
-                
+                HypotezManager.endHypotezGroup();
                 return;
         }
         throw new RuntimeException("v is null");

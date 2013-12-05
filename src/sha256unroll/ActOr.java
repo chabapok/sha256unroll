@@ -27,13 +27,14 @@ public class ActOr implements IAct{
                 return;
                 
             case ONE:
-                
+                HypotezManager.startHypotezGroup(n);
                 for(int i=0; i<node.parentNodes.size(); i++){
                     Hypotez h =  HypotezManager.openHypotez(node);
                     h.values[i] = Val.ONE;
                     node.unroll(h);
                     h.close();
                 }
+                HypotezManager.endHypotezGroup();
                 return;
         }
         throw new RuntimeException("v is null");

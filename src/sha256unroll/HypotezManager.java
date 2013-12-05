@@ -44,5 +44,13 @@ public class HypotezManager {
     static String branchPath() {
         return lastHypotez.branchPath();
     }
+
+    static void startHypotezGroup(Node n) {
+        
+    }
+
+    static void endHypotezGroup() {
+        
+    }
     
 }
