@@ -17,6 +17,16 @@ public class HypotezManager {
         h = node.registerHypotez(h);
         return h;
     }
+
+    static Hypotez openHypotez(Node node, Val ... v){
+        Hypotez h = createEmpty(node);
+        if (h.values.length!=v.length) throw new RuntimeException("Length inconsistent");
+        h.values = v;
+        h = node.registerHypotez(h);
+        return h;
+    }
+
+    
     
     static Hypotez createEmpty(Node node){
         Hypotez h = new Hypotez();

@@ -22,7 +22,8 @@ public class EndNode extends Node{
     public EndNode(Val vv){
         super(null, null);
         v = vv;
-        this.name = "c";
+        this.name = (v==Val.ANY) ? "x" : "c";
+        
     }
 
     
