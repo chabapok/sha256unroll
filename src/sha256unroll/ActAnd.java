@@ -20,7 +20,6 @@ public class ActAnd implements IAct{
     public void unroll(Node node, Val v) {
         switch(v){
             case ANY:
-            case NANY:
             case ONE:
                 for(Node n: node.parentNodes){
                     n.unroll(v);

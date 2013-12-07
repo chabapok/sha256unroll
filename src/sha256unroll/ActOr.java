@@ -1,10 +1,8 @@
 package sha256unroll;
 
 import java.util.Map;
-import static sha256unroll.Val.ANY;
-import static sha256unroll.Val.NANY;
-import static sha256unroll.Val.NULL;
-import static sha256unroll.Val.ONE;
+
+import static sha256unroll.Val.*;
 
 public class ActOr implements IAct{
 
@@ -19,7 +17,6 @@ public class ActOr implements IAct{
     public void unroll(Node node, Val v) {
         switch(v){
             case ANY:
-            case NANY:
             case NULL:
                 for(Node n: node.parentNodes){
                     n.unroll(v);

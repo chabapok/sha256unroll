@@ -19,7 +19,7 @@ public class ValTest {
     
     @Test
     public void testValues() {
-        Val v1[]={Val.NULL, Val.ONE, Val.ANY, Val.NANY};
+        Val v1[]={Val.NULL, Val.ONE, Val.ANY};
         
         for(Val x: v1){
             StringBuilder sb = new StringBuilder();

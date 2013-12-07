@@ -4,15 +4,27 @@ import java.util.Map;
 
 
 public class EndNode extends Node{
-    Val v = Val.ANY;
     
+    private Val v;
     
     public EndNode(String name){
         super(null, null);
         this.name = name;    
+        v = Val.ANY;
     }
     
+    public EndNode(String name, Val vv){
+        super(null, null);
+        v = vv;
+        this.name = name;
+    }
     
+    public EndNode(Val vv){
+        super(null, null);
+        v = vv;
+        this.name = "c";
+    }
+
     
     @Override
     void unroll(Val v){

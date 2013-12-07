@@ -6,7 +6,7 @@ package sha256unroll;
  */
 public enum Val {
 
-    NULL, ONE, ANY, NANY;
+    NULL, ONE, ANY;
 
     public Val not() {
         switch (this) {
@@ -15,8 +15,6 @@ public enum Val {
             case ONE:
                 return NULL;
             case ANY:
-                return NANY;
-            case NANY:
                 return ANY;
         }
         throw new RuntimeException("Val==null");
@@ -30,16 +28,10 @@ public enum Val {
         if (this == other) {
             return this;
         }
-        if (this == ANY && other != NANY) {
+        if (this == ANY && other != ANY) {
             return other;
         }
-        if (this == NANY && other != ANY){
-            return other;
-        }
-        if (other == ANY && this!=NANY){
-            return this;
-        }
-        if (other== NANY && this!=ANY){
+        if (other == ANY && this != ANY){
             return this;
         }
         
@@ -55,8 +47,6 @@ public enum Val {
                 return "1";
             case ANY:
                 return "*";
-            case NANY:
-                return "!*";
         }
         return "u";
     }
