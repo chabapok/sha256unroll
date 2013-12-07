@@ -35,8 +35,8 @@ public class EndNode extends Node{
 
     
     @Override
-    Val calc(Map<String, Val> v){
-        Val r=v.get(name);
+    Val calc(Map<String, Val> vv){
+        Val r=vv.get(name);
         if (r==null){
             System.out.println("WARN: can't find "+name+" in value map");
         }

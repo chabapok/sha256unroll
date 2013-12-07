@@ -1,6 +1,7 @@
 package sha256unroll;
 
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import static sha256unroll.Utils.*;
@@ -46,6 +47,7 @@ public class Sha256Unroll {
         notResult.unroll( h );
         h.close();
         
+        
         println("hypotez count="+HypotezManager.hypNum);
         println("root hyp count="+HypotezManager.rootHypotez.size());
         
@@ -55,6 +57,11 @@ public class Sha256Unroll {
             Val r = result.calc(m);
             System.out.println("x="+x+" r="+r);
         }
+        
+        
+        HypotezManager.prev.findHypotezes(new HashMap<String, Val>());
+        ResolveManager.show();
+        
     }
     
     

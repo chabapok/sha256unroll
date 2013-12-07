@@ -45,5 +45,15 @@ public class Node {
     Val calc(Map<String, Val> v){
         return action.calc(this, v);
     }
+
+    
+    HypotezGroup hypotezGroup;
+    Hypotez registerHypotez(Hypotez h) {
+        if (hypotezGroup==null){
+            hypotezGroup = HypotezManager.createGroup(this);
+        }
+        
+        return hypotezGroup.register(h);
+    }
     
 }

@@ -12,6 +12,13 @@ public class HypotezManager {
     static Hypotez lastHypotez;
     
     static Hypotez openHypotez(Node node, int index, Val v){
+        Hypotez h = createEmpty(node);
+        h.values[index] = v;
+        h = node.registerHypotez(h);
+        return h;
+    }
+    
+    static Hypotez createEmpty(Node node){
         Hypotez h = new Hypotez();
         h.values = new Val[ node.parentNodes.size() ];
         h.num = hypNum;
@@ -29,8 +36,6 @@ public class HypotezManager {
             rootHypotez.add(h);
         }
         lastHypotez = h;
-        if (index>=0)
-            h.values[index] =v;
         return h;
     }
     
@@ -46,9 +51,16 @@ public class HypotezManager {
     static String branchPath() {
         return lastHypotez.branchPath();
     }
+
     
-    public interface HypotezInitializator{
-        void init(Hypotez h);
+    
+    static HypotezGroup prev;
+    
+    static HypotezGroup createGroup(Node n) {
+        HypotezGroup h = new HypotezGroup();
+        h.prev = prev;
+        prev = h;
+        return h;
     }
     
 }
