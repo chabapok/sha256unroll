@@ -50,7 +50,9 @@ public class ActXor implements IAct{
     private void unroll3(Node node, Val v){
         if (v==Val.NULL){
             
-            Hypotez h = HypotezManager.openHypotez(node, Val.NULL, Val.NULL, Val.NULL );
+            Hypotez h;
+            
+            h = HypotezManager.openHypotez(node, Val.NULL, Val.NULL, Val.NULL );
             node.unroll(h);
             h.close();
             
