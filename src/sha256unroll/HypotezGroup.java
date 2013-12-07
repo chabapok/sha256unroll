@@ -76,6 +76,16 @@ public class HypotezGroup {
         }
         return result;
     }
+
+    void unregister(Hypotez h) {
+        for(int i=0; i<group.size();i++){
+            Hypotez other = group.get(i);
+            if (equal(h, other)) {
+                group.remove(i);
+                return;
+            }
+        }
+    }
     
     
 }

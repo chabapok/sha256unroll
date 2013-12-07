@@ -29,13 +29,12 @@ public class EndNode extends Node{
     
     @Override
     void unroll(Val v){
+        if (v==Val.ANY) return;
         TreeBranchManager.atEnter(this);
         HypotezManager.addDeduction(name, v);
-        
+
         System.out.println(" "+name+" node path: "+TreeBranchManager.current() );
-        TreeBranchManager.atExit();
-        
-        
+        TreeBranchManager.atExit();        
     }
 
     

@@ -41,12 +41,14 @@ public class Sha256Unroll {
         
         Node result = new Node(or, m1, m4, m6, m8, m13);result.name = "result";
         
+        result.unroll(Val.NULL);
+        /*
         Node notResult = new Node(not, result); notResult.name = "notResult";
         
-        Hypotez h = HypotezManager.openHypotez(notResult, 0, Val.NULL);
+        Hypotez h = HypotezManager.openHypotez(notResult, 0, Val.ONE);
         notResult.unroll( h );
         h.close();
-        
+        */
         
         println("hypotez count="+HypotezManager.hypNum);
         println("root hyp count="+HypotezManager.rootHypotez.size());

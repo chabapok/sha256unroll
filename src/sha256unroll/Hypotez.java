@@ -18,8 +18,11 @@ public class Hypotez {
     Map<String, Val> deduction;
     
     boolean closed = false;
+    boolean broken = false;
     
-    public void addDeduction(String variable, Val value){
+    
+    public boolean addDeduction(String variable, Val value){
+        if (value==Val.ANY){ return broken;}
         if (closed)
             println("Warn: add Deduction to closed hypotez");
         
@@ -27,7 +30,13 @@ public class Hypotez {
         
         if (deduction==null)
             deduction = new TreeMap();
-        deduction.put(variable, value);
+        Val old = deduction.put(variable, value);
+        
+        if ( (old==Val.NULL && value==Val.ONE) || (old==Val.ONE && value==Val.NULL) ){
+            broken = true;
+            node.unregisterGypotez(this);
+        }
+        return broken;
     }
     
     public void close(){

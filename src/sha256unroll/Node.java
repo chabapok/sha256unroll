@@ -23,7 +23,7 @@ public class Node {
         this.action = action;
     }
     
-    
+       
     void unroll(Val v){
         TreeBranchManager.atEnter(this);
         action.unroll(this, v);
@@ -54,6 +54,11 @@ public class Node {
         }
         
         return hypotezGroup.register(h);
+    }
+
+    void unregisterGypotez(Hypotez h) {
+        if (hypotezGroup==null) return;
+        hypotezGroup.unregister(h);
     }
     
 }
