@@ -12,6 +12,9 @@ public class Node {
     
     String name;
     
+    //что в ноду пришло снизу
+    Val unrolled;
+    
     public Node(IAct action, Node ... args){
         parentNodes = new ArrayList();
         parentNodes.addAll(Arrays.asList(args));
@@ -25,19 +28,20 @@ public class Node {
     
        
     void unroll(Val v){
-        TreeBranchManager.atEnter(this);
+        unrolled = v;
+        //TreeBranchManager.atEnter(this);
         action.unroll(this, v);
-        TreeBranchManager.atExit();
+       // TreeBranchManager.atExit();
     }
 
     void unroll(Hypotez h) {
-        TreeBranchManager.atEnter(this);
+       // TreeBranchManager.atEnter(this);
         int i=0;
         for(Node n : parentNodes){
             n.unroll(h.values[i]);
             i++;
         }
-        TreeBranchManager.atExit();
+       // TreeBranchManager.atExit();
     }
     
     
