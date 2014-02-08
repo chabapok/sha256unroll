@@ -39,7 +39,7 @@ public class Node {
         assert(op=='!');
     }
     
-    
+       
     public Collection<String> probeVal(char v){
         if (v=='*') throw new RuntimeException("Зачем тогда звать? неважно же! "+name);
         switch(operation){

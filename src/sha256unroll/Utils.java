@@ -60,11 +60,11 @@ public class Utils {
         return sb.toString();
     }
     
-    //тут неверно... надо как-то обьединять, даже с пустой...
+    
     static Collection<String> removeDupes(Collection<String> aArr, Collection<String> bArr){
-        ConsolidateSet result = new ConsolidateSet();
-        result.consolidate(aArr);
-        result.consolidate(bArr);        
+        Set result = new HashSet();
+        result.addAll(aArr);
+        result.addAll(bArr);        
         return result;
     }
 

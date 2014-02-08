@@ -12,6 +12,13 @@ import java.util.Set;
 public class ConsolidateSet extends HashSet<String>{
 
     void consolidate(Collection<String> arr) {
+        if (isEmpty() && !arr.isEmpty()){
+            for(String s: arr){
+                add(s);
+                break;
+            }
+        }
+        
         Set<String> r = new HashSet();
         for(String s: arr){
             for(String ss: this){

@@ -1,6 +1,7 @@
 package sha256unroll;
 
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -10,10 +11,10 @@ public class Sha256Unroll {
 
     
     public static void main(String[] args) {
-        EndNode x1 = new EndNode("x1");
-        EndNode x2 = new EndNode("x2");
-        EndNode x3 = new EndNode("x3");
-        EndNode x4 = new EndNode("x4");
+        EndNode x1 = new EndNode(1);
+        EndNode x2 = new EndNode(2);
+        EndNode x3 = new EndNode(3);
+        EndNode x4 = new EndNode(4);
         
         char or  = '+';
         char and = '*';
@@ -42,9 +43,12 @@ public class Sha256Unroll {
         
         Node result = new Node(or, m4, m6);result.name = "result";
         
-    
+        Collection<String> variants0= result.probeVal('0');
+        System.out.println("v0="+variants0);
 
-        
+        Collection<String> variants1= result.probeVal('1');
+        System.out.println("v1="+variants1);
+
     }
     
     
