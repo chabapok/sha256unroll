@@ -15,14 +15,14 @@ public class Sha256Unroll {
         EndNode x3 = new EndNode("x3");
         EndNode x4 = new EndNode("x4");
         
-        IAct or  = ActOr.instance;
-        IAct and = ActAnd.instance;
-        IAct not = ActNot.instance;
+        char or  = '+';
+        char and = '*';
+        char not = '!';
         
         //Node m1 = new Node(and, x1, x2,x3,x4);m1.name = "m1";
         
         Node m2 = new Node(and, x2,x3); m2.name = "m2";
-        Node m3 = new Node(not, m2);m3.name = "m3";
+        Node m3 = new Node(not, m2); m3.name = "m3";
         Node m4 = new Node(and, x1, m3);m4.name = "m4";
         
         Node m5 = new Node(or, x2, x1);m5.name = "m5";
@@ -42,41 +42,11 @@ public class Sha256Unroll {
         
         Node result = new Node(or, m4, m6);result.name = "result";
         
-        result.unroll(Val.ONE);
-        /*
-        Node notResult = new Node(not, result); notResult.name = "notResult";
-        
-        Hypotez h = HypotezManager.openHypotez(notResult, 0, Val.ONE);
-        notResult.unroll( h );
-        h.close();
-        */
-        
-        println("hypotez count="+HypotezManager.hypNum);
-        println("root hyp count="+HypotezManager.rootHypotez.size());
-        
-        
-        for(int x=0; x<16; x++){
-            Map<String, Val> m = createFor(x);
-            Val r = result.calc(m);
-            System.out.println("x="+x+" r="+r);
-        }
-        
-        
-        HypotezManager.prev.findHypotezes(new HashMap<String, Val>());
-        ResolveManager.show();
+    
+
         
     }
     
-    
-    
-    static Map<String, Val> createFor(int v){
-        Map<String, Val> m = new TreeMap();
-        for(int i=1; i<32; i++){
-            m.put("x"+i, ((v&1)==1) ? Val.ONE : Val.NULL );
-            v = v>>1;
-        }
-        return m;
-    }
     
     
 }
