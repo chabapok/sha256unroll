@@ -105,7 +105,7 @@ public class Utils {
         Node n2 = new Node(op, args[0], args[1]);
         switch(args.length){
             case 2: return n2;
-            case 3: return new Node(op, args[3]);
+            case 3: return new Node(op, n2, args[2]);
             default: {
                     Node a[] = Arrays.copyOfRange(args, 2, args.length);
                     Node otherNodes = op(op, a);
@@ -120,4 +120,12 @@ public class Utils {
     static Node xor(Node ... args){ return op('^', args); }
     static Node not(Node arg){      return new Node('!', arg); }
     
+    
+    private static Node xNodes[] = new Node[1024];
+    static Node x(int i){
+        if (xNodes[i]==null){
+            xNodes[i] =new EndNode(i);
+        }
+        return xNodes[i];
+    }
 }
