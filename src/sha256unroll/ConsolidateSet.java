@@ -126,17 +126,11 @@ public class ConsolidateSet extends ArrayList<String> {
                         
         }
         
-        /*
-        if (aMod==false && maskBuilder!=null){
-            return maskBuilder.toString();
-        }*/
         if (maskReplacePos>=0){
-            StringBuilder sb = new StringBuilder();
-            sb.append(aStr);
-            sb.replace(maskReplacePos, maskReplacePos+1, "*");
-            return sb.toString();
+            char[] chars = aStr.toCharArray();
+            chars[maskReplacePos] = '*';
+            return String.valueOf(chars);
         }
-        
         if (aSetofB) return bStr;
         if (bSetofA) return aStr;
         return null;
