@@ -46,6 +46,16 @@ public class ConsolidateSetTest {
         
         set.consolidate("0110", "0100");
         System.out.println(set);
+        
+        System.out.println("----");
+        
+        set.clear();
+        set.consolidate(
+                "111",
+                "**0");//,
+                //"*0*1");
+        System.out.println(set);
     }
+    
     
 }

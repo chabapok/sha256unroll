@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class EndNode extends Node{
     
-    final int varCount=4;
+    static int varCount=4;
     
     int index;
     

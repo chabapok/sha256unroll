@@ -93,40 +93,58 @@ public class ConsolidateSet extends ArrayList<String> {
         if (aStr.length() != bStr.length()) {
             throw new RuntimeException("length not same a=" + aStr + " b=" + bStr);
         }
-
-        StringBuilder newSetBuilderA = new StringBuilder();
-        StringBuilder newSetBuilderB = new StringBuilder();
-
+        
+        boolean aSetofB = true;
+        boolean bSetofA = true;
+       
+        int maskReplacePos = -1;
+        boolean aMod=true;
+        
         for (int i = 0; i < aStr.length(); i++) {
             char a = aStr.charAt(i);
             char b = bStr.charAt(i);
 
             //проверка, что а - все еще надмножество (и значит б-подмножесто)
-            if (newSetBuilderA != null && b == '*' && a != '*') {
-                newSetBuilderA = null;
+            if ( !mayConverted(a, b) ){
+                bSetofA = false;
             }
 
-            //проверка, что b - все еще надмножество (и значит a-подмножество)
-            if (newSetBuilderB != null && a == '*' && b != '*') {
-                newSetBuilderB = null;
+            if ( !mayConverted(b, a)){
+                aSetofB = false;
             }
-
-            if (newSetBuilderA != null) {
-                newSetBuilderA.append((a == b) ? a : '*');
+            
+            if ( maskReplacePos != -2 ){
+                if (a!=b) {
+                    if (aMod){
+                        aMod = false;
+                        maskReplacePos=i;
+                    }else{
+                        maskReplacePos=-2;
+                    }
+                }
             }
-
-            if (newSetBuilderB != null) {
-                newSetBuilderB.append((a == b) ? a : '*');
-            }
+                        
         }
-
-        if (newSetBuilderA != null) {
-            return newSetBuilderA.toString();
+        
+        /*
+        if (aMod==false && maskBuilder!=null){
+            return maskBuilder.toString();
+        }*/
+        if (maskReplacePos>=0){
+            StringBuilder sb = new StringBuilder();
+            sb.append(aStr);
+            sb.replace(maskReplacePos, maskReplacePos+1, "*");
+            return sb.toString();
         }
-        if (newSetBuilderB != null) {
-            return newSetBuilderB.toString();
-        }
+        
+        if (aSetofB) return bStr;
+        if (bSetofA) return aStr;
         return null;
+    }
+
+    //"a" может превращаться в "b"
+    private boolean mayConverted(char a, char b) {
+        return a==b || (a=='*');
     }
 
 }

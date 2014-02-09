@@ -51,22 +51,13 @@ public class Node {
             default: throw new RuntimeException("Wrong operation "+operation);
         }
         
-        System.out.printf("%s (%s->%s): %s\n", name, v, operation,c);
+        //System.out.printf("%s (%s->%s): %s\n", name, v, operation,c);
         return c;
     }
 
     private Collection<String> not(char v) {
         Collection<String> fromUp = a.probeVal( Utils.not(v) );
-        ArrayList<String> result = new ArrayList();
-        for(String val: fromUp){
-            StringBuilder sb = new StringBuilder();
-            for(int i=0; i<val.length(); i++){
-                sb.append( Utils.not(val.charAt(i)) );
-            }
-            String inversed = sb.toString();
-            result.add(inversed);
-        }
-        return result;
+        return fromUp;
     }
     
     private Collection<String> or(char v) {
