@@ -42,15 +42,32 @@ public class Node {
        
     public Collection<String> probeVal(char v){
         if (v=='*') throw new RuntimeException("Зачем тогда звать? неважно же! "+name);
+        Collection<String> c;
         switch(operation){
-            case '!': return a.probeVal( not(v) );
-            case '+': return or(v);
-            case '*': return and(v);
-            case '^': return xor(v);
+            case '!': c = not(v); break;
+            case '+': c = or(v); break;
+            case '*': c = and(v); break;
+            case '^': c = xor(v); break;
+            default: throw new RuntimeException("Wrong operation "+operation);
         }
-        throw new RuntimeException("Wrong operation "+operation);
+        
+        System.out.printf("%s (%s->%s): %s\n", name, v, operation,c);
+        return c;
     }
 
+    private Collection<String> not(char v) {
+        Collection<String> fromUp = a.probeVal( Utils.not(v) );
+        ArrayList<String> result = new ArrayList();
+        for(String val: fromUp){
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i<val.length(); i++){
+                sb.append( Utils.not(val.charAt(i)) );
+            }
+            String inversed = sb.toString();
+            result.add(inversed);
+        }
+        return result;
+    }
     
     private Collection<String> or(char v) {
         if (v=='0'){
