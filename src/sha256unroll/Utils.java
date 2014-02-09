@@ -95,7 +95,10 @@ public class Utils {
     static Node not(Node arg){      return new Node('!', arg); }
     
  
+    static Bits32 and(Bits32 a, Bits32 b){return a.and(b);}
+    static Bits32 or(Bits32 a, Bits32 b){return a.or(b);}
     static Bits32 xor(Bits32 a, Bits32 b){return a.xor(b);}
+    static Bits32 not(Bits32 a){return a.not();}
     
     private static Node xNodes[] = new Node[1024];
     static Node x(int i){

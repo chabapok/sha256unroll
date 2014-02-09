@@ -7,7 +7,7 @@ import static sha256unroll.Utils.*;
 
 public class Bits32{
 
-    private Node[] nodes = new Node[32];
+    private final Node[] nodes = new Node[32];
     
     
     
@@ -52,13 +52,13 @@ public class Bits32{
             else
                 b.nodes[i] = Utils.xor(v1.nodes[i], v2.nodes[i], carry);
             
-            Node ab =and(v1.nodes[i], v2.nodes[i]);
+            Node ab =Utils.and(v1.nodes[i], v2.nodes[i]);
             if (carry==null){
                 carry = ab;
             }else{
-                Node apb = or(v1.nodes[i], v2.nodes[i]);
-                Node capb = and(carry, apb);
-                carry = or(ab, capb);
+                Node apb = Utils.or(v1.nodes[i], v2.nodes[i]);
+                Node capb = Utils.and(carry, apb);
+                carry = Utils.or(ab, capb);
             }
         }
         return b;
@@ -153,6 +153,30 @@ public class Bits32{
         Bits32 b = new Bits32();
         for(int i = 0; i<32; i++){
             b.nodes[i] = Utils.xor( nodes[i], other.nodes[i] );
+        }
+        return b;
+    }
+    
+    Bits32 and(Bits32 other){
+        Bits32 b = new Bits32();
+        for(int i = 0; i<32; i++){
+            b.nodes[i] = Utils.and( nodes[i], other.nodes[i] );
+        }
+        return b;
+    }
+
+    Bits32 or(Bits32 other){
+        Bits32 b = new Bits32();
+        for(int i = 0; i<32; i++){
+            b.nodes[i] = Utils.or( nodes[i], other.nodes[i] );
+        }
+        return b;
+    }
+    
+    Bits32 not(){
+        Bits32 b = new Bits32();
+        for(int i = 0; i<32; i++){
+            b.nodes[i] = Utils.not( nodes[i] );
         }
         return b;
     }
