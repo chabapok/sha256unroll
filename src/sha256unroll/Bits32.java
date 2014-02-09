@@ -120,4 +120,16 @@ public class Bits32{
         }
         return al.toArray(new String[al.size()]);
     }
+    
+    
+    Bits32 rr(int count){
+        Bits32 b = new Bits32();
+        for(int i = 0; i<32; i++){
+            int target = i-count;
+            if (target<0) target+=32;
+            b.nodes[target] = nodes[i];
+        }
+        return b;
+    }
+    
 }
