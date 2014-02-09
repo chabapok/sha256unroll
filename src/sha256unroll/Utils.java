@@ -1,6 +1,7 @@
 package sha256unroll;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -62,9 +63,9 @@ public class Utils {
     
     
     static Collection<String> removeDupes(Collection<String> aArr, Collection<String> bArr){
-        Set result = new HashSet();
-        result.addAll(aArr);
-        result.addAll(bArr);        
+        ConsolidateSet result = new ConsolidateSet();
+        result.consolidate(aArr);
+        result.consolidate(bArr);        
         return result;
     }
 
@@ -98,5 +99,25 @@ public class Utils {
     
     
     
+    
+    static Node op(char op, Node ... args){
+        
+        Node n2 = new Node(op, args[0], args[1]);
+        switch(args.length){
+            case 2: return n2;
+            case 3: return new Node(op, args[3]);
+            default: {
+                    Node a[] = Arrays.copyOfRange(args, 2, args.length);
+                    Node otherNodes = op(op, a);
+                    Node r = new Node(op, n2, otherNodes);
+                    return r;
+                }
+        }
+    }
+    
+    static Node or(Node ... args){  return op('+', args); }
+    static Node and(Node ... args){ return op('*', args); }
+    static Node xor(Node ... args){ return op('^', args); }
+    static Node not(Node arg){      return new Node('!', arg); }
     
 }

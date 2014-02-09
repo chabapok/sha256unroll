@@ -19,15 +19,30 @@ public class ConsolidateSet extends HashSet<String>{
             }
         }
         
-        Set<String> r = new HashSet();
-        for(String s: arr){
-            for(String ss: this){
-                String combined = Utils.decombine(ss, s);
-                if (combined!=null) r.add(combined);
+        metka:
+        for(String addV: arr){
+            for(String presentV: this){
+                if (pokriv(presentV, addV)) continue metka;
+                if (pokriv(addV, presentV)){
+                    remove(presentV);
+                    add(addV);
+                    continue metka;
+                }
             }
+            add(addV);
         }
-        this.clear();
-        this.addAll(r);
+    }
+
+    //проверка - то что еcть покрывает то, что хотим добавить
+    private boolean pokriv(String presentV, String addV) {
+        
+        for(int i=0; i<presentV.length(); i++){
+            char p = presentV.charAt(i);
+            char a = addV.charAt(i);
+            if ( (p=='*') || (p==a) ) continue;
+            return false;
+        }
+        return true;
     }
     
 }
