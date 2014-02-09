@@ -132,4 +132,20 @@ public class Bits32{
         return b;
     }
     
+    Bits32 shr(int count){
+        Bits32 b = new Bits32();
+        ConstNode ZERO = VariableManager.lastInstance.constNode('0');
+        
+        for(int i = 0; i<32; i++){
+            int target = i-count;
+            if (target<0){
+                target+=32;
+                b.nodes[target] = ZERO;
+            }else{
+                b.nodes[target] = nodes[i];
+            }
+        }
+        return b;
+        
+    }
 }
