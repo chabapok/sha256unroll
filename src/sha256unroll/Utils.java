@@ -20,7 +20,7 @@ public class Utils {
     
     
     static Collection<String> combineNotConflicted(Collection<String> aArr, Collection<String> bArr){
-        ConsolidateSet result = new ConsolidateSet();
+        ConsolidateSet result = new ConsolidateSet( aArr.size() + bArr.size() );
         
         for(String aVariant:aArr ){
             for(String bVariant:bArr ){
@@ -63,42 +63,12 @@ public class Utils {
     
     
     static Collection<String> removeDupes(Collection<String> aArr, Collection<String> bArr){
-        ConsolidateSet result = new ConsolidateSet();
+        ConsolidateSet result = new ConsolidateSet( aArr.size()+bArr.size() );
         result.consolidate(aArr);
         result.consolidate(bArr);        
         return result;
     }
 
-    
-    /**
-     * Разуточнение.
-     * 
-     * *1, *0, **, 1*, 0* ->*
-     * 11 ->1
-     * 00 ->0
-     * 
-     * 01,10 ->запрещено
-     * 
-     */    
-    static String decombine(String aVariant, String bVariant) {
-        if (aVariant.length()!=bVariant.length()) throw new RuntimeException("Length not same! "+aVariant+":"+bVariant);
-        
-        StringBuilder sb = new StringBuilder(aVariant.length());
-        
-        for(int i=0; i<aVariant.length(); i++){
-            char a = aVariant.charAt(i);
-            char b = bVariant.charAt(i);
-            
-            if (a=='*' || b=='*') {sb.append('*'); continue;}
-            if (a==b) {sb.append(a); continue;}
-            return null; //01 or 10
-        }
-        return sb.toString();
-        
-    }
-    
-    
-    
     
     static Node op(char op, Node ... args){
         

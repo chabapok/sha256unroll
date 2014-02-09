@@ -3,15 +3,21 @@ package sha256unroll;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
 /**
  *
  * @author chabapok
  */
 public class ConsolidateSet extends ArrayList<String> {
+
+    ConsolidateSet(){
+        super();
+    }
+    
+
+    ConsolidateSet(int capacity){
+        super(capacity);
+    }
 
     
     void consolidate(String... args){
