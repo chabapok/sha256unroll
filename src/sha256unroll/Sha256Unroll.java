@@ -8,7 +8,7 @@ public class Sha256Unroll {
 
     
     public static void main(String[] args) {
-        VariableManager vars = new VariableManager(4);
+        VariableManager vars = VariableManager.create(4);
         
         EndNode x1 = vars.node(0);
         EndNode x2 = vars.node(1);
@@ -40,17 +40,45 @@ public class Sha256Unroll {
         //Node result = or(m1, m4, m6, m8);result.name = "result";
         Node result = or(m1, m4, m6, m8, m13);result.name = "result";
         
-        printTablIst(vars, result, 4);
+       // printTablIst(vars, result, 4);
         
         vars.init( 3, '1');
         printVariants(result);
         
+        
+        vars = VariableManager.create(64);
+        
+        Bits32 v1 = Bits32.create(-20);
+        Bits32 v2 = Bits32.createVar();
+        v2.setBit(15, '1');
+        Bits32 r = Bits32.add(v1, v2);
+        
+        Collection<String> res = r.probeVal(1235);
+        for(String variant: res){
+            String[] toks = Bits32.split(variant);
+            for(String tok: toks){
+                System.out.print(tok+ " ");
+            }
+            System.out.println("");
+        }
+        
+        /*
+        vars = VariableManager.create(2);
+        x1 = vars.createNext();
+        x2 = vars.createNext();
+        result = xor(x1, x2);
+        x1.init('1');
+        Collection<String> res = result.probeVal('0');
+        System.out.println(res);
+        */
+        
+        /*
         System.out.println("");
         
         result = xor(x1, x2, x3);result.name = "result";
         printTablIst(vars, result, 3);
         printVariants(result);
-        
+        */
     }
     
     static void printVariants(Node result){

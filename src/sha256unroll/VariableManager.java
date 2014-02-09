@@ -7,13 +7,23 @@ import java.util.Arrays;
  * @author chabapok
  */
 public class VariableManager {
+    static VariableManager lastInstance;
 
+    static VariableManager create(int varCount){
+        VariableManager vm = new VariableManager(varCount);
+        lastInstance = vm;
+        return vm;
+    }
+    
+    
     private char[] initialConditions;
     
-    VariableManager(int varCount){
+    private VariableManager(int varCount){
         initialConditions = new char[varCount];
         Arrays.fill(initialConditions, '*');
+        
     }
+    
     
     
     char[] getConditionsForVar(int varnum, char value){
@@ -31,17 +41,27 @@ public class VariableManager {
     }
 
     
+    int cn =0;
+    EndNode createNext(){
+        EndNode en = node(cn++);
+        return en;
+    }
+    
+    EndNode createNext(String name){
+        EndNode en = node(cn++, name);
+        return en;
+    }
+    
+    
     EndNode node(int index){
-        EndNode n = new EndNode(index);
-        n.varManager = this;
-        return n;
+        return node(index, "x");
     }
 
     
     EndNode node(int index, String name){
         EndNode n = new EndNode(index);
         n.varManager = this;
-        n.name = name;
+        n.name = name+index;
         return n;
     }
 

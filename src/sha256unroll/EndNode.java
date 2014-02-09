@@ -31,6 +31,10 @@ public class EndNode extends Node{
         
     }
     
+    public void init(char v){
+        varManager.init(index, v);
+    }
+    
     
     @Override
     char calc(){
