@@ -20,12 +20,12 @@ public class Utils {
     
     
     static Collection<String> combineNotConflicted(Collection<String> aArr, Collection<String> bArr){
-        HashSet<String> result = new HashSet();
+        ConsolidateSet result = new ConsolidateSet();
         
         for(String aVariant:aArr ){
             for(String bVariant:bArr ){
                 String combined = combine(aVariant, bVariant);
-                if (combined!=null) result.add(combined);
+                if (combined!=null) result.consolidate(combined);
             }    
         }
         
