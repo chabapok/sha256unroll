@@ -64,16 +64,14 @@ public class Node {
     }
     
     private Collection<String> or(char v) {
+        Collection<String> aArr = a.probeVal(v);
+        Collection<String> bArr = b.probeVal(v);
+
         if (v=='0'){
-            Collection<String> aArr = a.probeVal('0');
-            Collection<String> bArr = b.probeVal('0');
-            
             Collection<String> result = combineNotConflicted(aArr, bArr);
             return result;
             
         }else{
-            Collection<String> aArr = a.probeVal('1');
-            Collection<String> bArr = b.probeVal('1');
             
             Collection<String> result = removeDupes(aArr, bArr);
             return result;
@@ -81,51 +79,40 @@ public class Node {
     }
 
     private Collection<String> and(char v) {
+        Collection<String> aArr = a.probeVal(v);
+        Collection<String> bArr = b.probeVal(v);
+
         if (v=='1'){
-            Collection<String> aArr = a.probeVal('1');
-            Collection<String> bArr = b.probeVal('1');
-            
             Collection<String> result = combineNotConflicted(aArr, bArr);
             return result;
         }else{
-            Collection<String> aArr = a.probeVal('0');
-            Collection<String> bArr = b.probeVal('0');
-            
             Collection<String> result = removeDupes(aArr, bArr);
             return result;
         }
     }
 
     private Collection<String> xor(char v) {
-        if (v=='0'){
-            Collection<String> aArr = a.probeVal('0');
-            Collection<String> bArr = b.probeVal('0');
-            
-            Collection<String> result0 = combineNotConflicted(aArr, bArr);
-
-            
-            aArr = a.probeVal('1');
-            bArr = b.probeVal('1');
-            
-            Collection<String> result1 = combineNotConflicted(aArr, bArr);
+        
+        Collection<String> aArr0 = a.probeVal('0');
+        Collection<String> bArr0 = b.probeVal('0');
+        Collection<String> aArr1 = a.probeVal('1');
+        Collection<String> bArr1 = b.probeVal('1');
+        
+        if (v=='0'){            
+            Collection<String> result0 = combineNotConflicted(aArr0, bArr0);
+            Collection<String> result1 = combineNotConflicted(aArr1, bArr1);
 
             Collection<String> result = removeDupes(result0, result1);
             return result;
             
         }else{
-            Collection<String> aArr = a.probeVal('0');
-            Collection<String> bArr = b.probeVal('1');
             
-            Collection<String> result0 = combineNotConflicted(aArr, bArr);
-
-            aArr = a.probeVal('1');
-            bArr = b.probeVal('0');
-            
-            Collection<String> result1 = combineNotConflicted(aArr, bArr);
+            Collection<String> result0 = combineNotConflicted(aArr0, bArr1);
+            Collection<String> result1 = combineNotConflicted(aArr1, bArr0);
 
             Collection<String> result = removeDupes(result0, result1);
             return result;
-        }        
+        }
     }
     
     
