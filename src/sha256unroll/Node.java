@@ -117,6 +117,32 @@ public class Node {
     
     
     
-    
+    char calc(){
+        char aResult = a.calc();
+        if (operation=='!') return Utils.not(aResult);
+        char bResult = b.calc();
+        
+        switch(operation){
+            case '+': 
+                if (aResult=='1' || bResult=='1') return '1';
+                if (aResult=='0' && bResult=='0') return '0';
+                return '?';
+                
+            case '*':
+                if (aResult=='1' && bResult=='1') return '1';
+                if (aResult=='0' && bResult=='1') return '0';
+                if (aResult=='1' && bResult=='0') return '0';
+                if (aResult=='0' && bResult=='0') return '0';
+                return '?';
+                
+            case '^':
+                if (aResult=='1' && bResult=='1') return '0';
+                if (aResult=='0' && bResult=='0') return '0';
+                if (aResult=='0' && bResult=='1') return '1';
+                if (aResult=='1' && bResult=='0') return '1';
+                return '?';
+        }
+        throw new RuntimeException("Unknow operation "+operation);
+    }
     
 }

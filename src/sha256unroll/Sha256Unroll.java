@@ -2,10 +2,6 @@ package sha256unroll;
 
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-import javax.lang.model.element.VariableElement;
 import static sha256unroll.Utils.*;
 
 public class Sha256Unroll {
@@ -43,27 +39,43 @@ public class Sha256Unroll {
         
         //Node result = or(m1, m4, m6, m8);result.name = "result";
         Node result = or(m1, m4, m6, m8, m13);result.name = "result";
+        
+        printTablIst(vars, result, 4);
+        
         vars.init( 3, '1');
         printVariants(result);
         
-        
+        System.out.println("");
         
         result = xor(x1, x2, x3);result.name = "result";
+        printTablIst(vars, result, 3);
         printVariants(result);
         
-/*
-        Node a = and( x(1), x(2), x(3) );
-        result = or(and(x(1),x(2)), a );        
-        printVariants(result);
-        */
     }
     
     static void printVariants(Node result){
         Collection<String> variants0= result.probeVal('0');
-       System.out.println("v0="+variants0);
+        System.out.println("v0="+variants0);
 
         Collection<String> variants1= result.probeVal('1');
         System.out.println("v1="+variants1);
     }
+    
+    
+    static void printTablIst(VariableManager vm, Node result, int bitCount){
+        
+        for(int i=0; i<Math.pow(2, bitCount); i++){
+            String representation = Integer.toBinaryString(i);
+            while(representation.length() < bitCount){
+                representation = "0"+representation;
+            }
+            vm.init(representation);
+            char r = result.calc();
+            System.out.println(representation+"|"+r);
+        }
+        vm.reset();
+    }
+    
+    
     
 }

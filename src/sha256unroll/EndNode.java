@@ -32,6 +32,10 @@ public class EndNode extends Node{
     }
     
     
+    @Override
+    char calc(){
+        return varManager.get(index);
+    }
     
     
 }

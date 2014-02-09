@@ -26,6 +26,10 @@ public class VariableManager {
         }
     }
     
+    char get(int varnum) {
+        return initialConditions[varIndex(varnum)];
+    }
+
     
     EndNode node(int index){
         EndNode n = new EndNode(index);
@@ -37,6 +41,13 @@ public class VariableManager {
         initialConditions[varIndex(varnum)] = v;
     }
 
+    void init(String vars){
+        initialConditions = vars.toCharArray();
+    }
+    
+    void reset(){
+        Arrays.fill(initialConditions, '*');
+    }
     
     private int varIndex(int varNum){
         return initialConditions.length-1-varNum;
@@ -46,6 +57,7 @@ public class VariableManager {
     public String toString() {
         return String.valueOf(initialConditions);
     }
+
     
     
     
