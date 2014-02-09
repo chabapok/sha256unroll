@@ -63,7 +63,10 @@ public class Sha256Unroll {
         }
         
         Bits32 xx = Bits32.create(-1);
-        System.out.println(xx.calcBinary());
+        Bits32 zz = Bits32.create(0xC0);
+        Bits32 xored = xx.xor(zz);
+        
+        System.out.println( xored.calcBinary() );
         Bits32 yy = xx.shr(1);
         System.out.println(yy.calcBinary());
         yy = xx.shr(2);

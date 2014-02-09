@@ -48,9 +48,9 @@ public class Bits32{
         Node carry=null;
         for(int i=0; i<32; i++){
             if (carry==null)
-                b.nodes[i] = xor(v1.nodes[i], v2.nodes[i]);
+                b.nodes[i] = Utils.xor(v1.nodes[i], v2.nodes[i]);
             else
-                b.nodes[i] = xor(v1.nodes[i], v2.nodes[i], carry);
+                b.nodes[i] = Utils.xor(v1.nodes[i], v2.nodes[i], carry);
             
             Node ab =and(v1.nodes[i], v2.nodes[i]);
             if (carry==null){
@@ -146,6 +146,15 @@ public class Bits32{
             }
         }
         return b;
-        
     }
+    
+    
+    Bits32 xor(Bits32 other){
+        Bits32 b = new Bits32();
+        for(int i = 0; i<32; i++){
+            b.nodes[i] = Utils.xor( nodes[i], other.nodes[i] );
+        }
+        return b;
+    }
+    
 }
