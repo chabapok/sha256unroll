@@ -18,6 +18,10 @@ public class Utils {
         return '1';
     }
     
+    //"a" может превращаться в "b"
+    static boolean mayConverted(char a, char b) {
+        return a==b || (a=='*');
+    }
     
     static Collection<String> combineNotConflicted(Collection<String> aArr, Collection<String> bArr){
         ConsolidateSet result = new ConsolidateSet( aArr.size() + bArr.size() );

@@ -2,12 +2,12 @@ package sha256unroll;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 
 
 public class EndNode extends Node{
     
-    static int varCount=4;
+    VariableManager varManager;
+    
     
     int index;
     
@@ -19,13 +19,16 @@ public class EndNode extends Node{
 
     @Override
     public Collection<String> probeVal(char v) {
-        StringBuilder sb = new StringBuilder();
-        for(int i=varCount; i>0; i--){
-            sb.append( (index==i)? v:'*' );
+        char[] varStarts = varManager.getConditionsForVar(index, v);
+        
+        if (varStarts!=null){
+            ArrayList<String> result = new ArrayList(1);
+            result.add(String.valueOf(varStarts) );
+            return result;
+        }else{
+            return new ArrayList(0);
         }
-        ArrayList<String> result = new ArrayList(1);
-        result.add(sb.toString());
-        return result;
+        
     }
     
     

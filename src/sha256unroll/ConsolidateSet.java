@@ -3,6 +3,7 @@ package sha256unroll;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import static sha256unroll.Utils.mayConverted;
 
 /**
  *
@@ -126,11 +127,6 @@ public class ConsolidateSet extends ArrayList<String> {
         if (aSetofB) return bStr;
         if (bSetofA) return aStr;
         return null;
-    }
-
-    //"a" может превращаться в "b"
-    private boolean mayConverted(char a, char b) {
-        return a==b || (a=='*');
     }
 
 }

@@ -5,16 +5,19 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.lang.model.element.VariableElement;
 import static sha256unroll.Utils.*;
 
 public class Sha256Unroll {
 
     
     public static void main(String[] args) {
-        EndNode x1 = new EndNode(1);
-        EndNode x2 = new EndNode(2);
-        EndNode x3 = new EndNode(3);
-        EndNode x4 = new EndNode(4);
+        VariableManager vars = new VariableManager(4);
+        
+        EndNode x1 = vars.node(0);
+        EndNode x2 = vars.node(1);
+        EndNode x3 = vars.node(2);
+        EndNode x4 = vars.node(3);
         
         
         Node m1 = and(x1, x2,x3,x4);m1.name = "m1";
@@ -40,11 +43,12 @@ public class Sha256Unroll {
         
         //Node result = or(m1, m4, m6, m8);result.name = "result";
         Node result = or(m1, m4, m6, m8, m13);result.name = "result";
+        vars.init( 3, '1');
         printVariants(result);
         
         
         
-         result = xor(x1, x2, x3);result.name = "result";
+        result = xor(x1, x2, x3);result.name = "result";
         printVariants(result);
         
 /*
