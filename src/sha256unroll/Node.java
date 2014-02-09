@@ -116,6 +116,8 @@ public class Node {
     }
     
     
+    boolean isConst(){return false;}
+    
     
     char calc(){
         char aResult = a.calc();

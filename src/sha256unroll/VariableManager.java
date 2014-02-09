@@ -37,6 +37,15 @@ public class VariableManager {
         return n;
     }
 
+    
+    EndNode node(int index, String name){
+        EndNode n = new EndNode(index);
+        n.varManager = this;
+        n.name = name;
+        return n;
+    }
+
+    
     void init(int varnum, char v) {
         initialConditions[varIndex(varnum)] = v;
     }

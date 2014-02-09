@@ -37,5 +37,10 @@ public class EndNode extends Node{
         return varManager.get(index);
     }
     
+    @Override
+    boolean isConst(){
+        char c = varManager.get(index);
+        return c!= '*';
+    }
     
 }
