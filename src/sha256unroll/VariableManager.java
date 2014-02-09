@@ -1,6 +1,8 @@
 package sha256unroll;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 
 /**
  *
@@ -21,9 +23,16 @@ public class VariableManager {
     private VariableManager(int varCount){
         initialConditions = new char[varCount];
         Arrays.fill(initialConditions, '*');
-        
     }
     
+    
+    
+    Collection<String> getInitial(){
+        String v=String.valueOf(initialConditions);
+        ArrayList<String> initialCond = new ArrayList();
+        initialCond.add(v);
+        return initialCond;
+    }
     
     
     char[] getConditionsForVar(int varnum, char value){
@@ -65,6 +74,13 @@ public class VariableManager {
         return n;
     }
 
+    
+    ConstNode constNode(char v){
+        ConstNode n = new ConstNode(v);
+        n.varManager = this;
+        return n;
+    }
+    
     
     void init(int varnum, char v) {
         initialConditions[varIndex(varnum)] = v;

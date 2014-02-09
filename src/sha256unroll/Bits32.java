@@ -26,10 +26,8 @@ public class Bits32{
     static Bits32 create(int init){
         Bits32 b = new Bits32();
 
-        for(int i=0; i<32; i++){
-            b.nodes[i] = VariableManager.lastInstance.createNext();
-            
-            ((EndNode)b.nodes[i]).init( ((init&1) == 1)? '1' : '0' );
+        for(int i=0; i<32; i++){            
+            b.nodes[i] = VariableManager.lastInstance.constNode( ((init&1) == 1)? '1' : '0' );
             init = init>>>1;
         }
         return b;

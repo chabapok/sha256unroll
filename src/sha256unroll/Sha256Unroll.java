@@ -46,18 +46,18 @@ public class Sha256Unroll {
         printVariants(result);
         
         
-        vars = VariableManager.create(64);
+        vars = VariableManager.create(32);
         
-        Bits32 v1 = Bits32.create(-20);
+        Bits32 v1 = Bits32.create(20);
         Bits32 v2 = Bits32.createVar();
-        v2.setBit(15, '1');
+    
         Bits32 r = Bits32.add(v1, v2);
         
         Collection<String> res = r.probeVal(1235);
         for(String variant: res){
             String[] toks = Bits32.split(variant);
             for(String tok: toks){
-                System.out.print(tok+ " ");
+                System.out.print(Integer.parseInt(tok,2)+ " ");
             }
             System.out.println("");
         }
