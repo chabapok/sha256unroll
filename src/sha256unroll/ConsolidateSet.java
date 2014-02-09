@@ -54,20 +54,6 @@ public class ConsolidateSet extends ArrayList<String> {
         }
     }
 
-    //проверка - то что еcть покрывает то, что хотим добавить
-    private boolean pokriv(String presentV, String addV) {
-
-        for (int i = 0; i < presentV.length(); i++) {
-            char p = presentV.charAt(i);
-            char a = addV.charAt(i);
-            if ((p == '*') || (p == a)) {
-                continue;
-            }
-            return false;
-        }
-        return true;
-    }
-
     /**
      * Обрабатывает 2 ситуации:
      *
