@@ -21,7 +21,24 @@ public class Sha256Unroll {
         return result.toString();
     }
 
+    
+    
+    
     public static void main(String[] args) throws NoSuchAlgorithmException {
+        VariableManager vm = VariableManager.create(8);
+                
+        Bits8 [] b = Utils.fromString("The quick brown fox jumps over the lazy dog");
+        //Bits8 [] b = Utils.fromString("1");
+        
+        String s = Utils.foromBits8(b);
+        System.out.println("s="+s);
+        
+    }
+    
+    
+    
+    
+    public static void main1(String[] args) throws NoSuchAlgorithmException {
         
         
         String sss = hash256("The quick brown fox jumps over the lazy dog");

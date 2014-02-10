@@ -112,4 +112,28 @@ public class Utils {
         }
         return xNodes[i];
     }
+    
+    
+    
+    static Bits8[] fromString(String v){
+        byte[] symbols = v.getBytes();
+        Bits8[] r = new Bits8[symbols.length];
+        
+        for(int i=0; i<r.length; i++){
+            r[i] = Bits8.create(symbols[i]);
+        }
+        return r;
+    }
+    
+    static String foromBits8(Bits8[] b){
+        byte[] r = new byte[b.length];
+        
+        for(int i=0; i<b.length; i++){
+            r[i] = b[i].toByte();
+        }
+        String result = new String(r);
+        return result;
+    }
+    
+    
 }
