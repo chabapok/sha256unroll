@@ -10,7 +10,41 @@ public class Bits32{
     private final Node[] nodes = new Node[32];
     
     
+    ArrayList<Bits8> toBits8Arr(){
+        ArrayList<Bits8> r = new ArrayList();
+        Bits8 v = new Bits8();
+        v.copyFrom(nodes, 24, 8);
+        r.add(v);
+        
+        v = new Bits8();
+        v.copyFrom(nodes, 16, 8);
+        r.add(v);
+        
+        v = new Bits8();
+        v.copyFrom(nodes, 8, 8);
+        r.add(v);
+        
+        v = new Bits8();
+        v.copyFrom(nodes, 0, 8);
+        r.add(v);
+        
+        return r;
+    }
     
+    
+    static Bits32 fromBits8Arr(Bits8 v24, Bits8 v16, Bits8 v8, Bits8 v0){
+        Bits32 result = new Bits32();
+        
+        System.arraycopy(v24.nodes, 0, result.nodes, 24, 8);
+        System.arraycopy(v16.nodes, 0, result.nodes, 16, 8);
+        System.arraycopy(v8.nodes,  0, result.nodes, 8, 8);
+        System.arraycopy(v0.nodes,  0, result.nodes, 0, 8);
+        
+        return result;
+    }
+    
+    
+            
     void setTo(int v){
         for(int i=0; i<32; i++){
             ((EndNode)nodes[i]).init( ((v&1) == 1)? '1' : '0' );
@@ -43,20 +77,20 @@ public class Bits32{
     }
     
     
-    static Bits32 add(Bits32 v1, Bits32 v2){
+    Bits32 add( Bits32 v2 ){
         Bits32 b = new Bits32();
         Node carry=null;
         for(int i=0; i<32; i++){
             if (carry==null)
-                b.nodes[i] = Utils.xor(v1.nodes[i], v2.nodes[i]);
+                b.nodes[i] = Utils.xor(nodes[i], v2.nodes[i]);
             else
-                b.nodes[i] = Utils.xor(v1.nodes[i], v2.nodes[i], carry);
+                b.nodes[i] = Utils.xor(nodes[i], v2.nodes[i], carry);
             
-            Node ab =Utils.and(v1.nodes[i], v2.nodes[i]);
+            Node ab =Utils.and(nodes[i], v2.nodes[i]);
             if (carry==null){
                 carry = ab;
             }else{
-                Node apb = Utils.or(v1.nodes[i], v2.nodes[i]);
+                Node apb = Utils.or(nodes[i], v2.nodes[i]);
                 Node capb = Utils.and(carry, apb);
                 carry = Utils.or(ab, capb);
             }

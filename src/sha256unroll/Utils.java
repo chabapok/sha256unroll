@@ -99,6 +99,11 @@ public class Utils {
     static Bits32 or(Bits32 a, Bits32 b){return a.or(b);}
     static Bits32 xor(Bits32 a, Bits32 b){return a.xor(b);}
     static Bits32 not(Bits32 a){return a.not();}
+
+    
+    static Bits32 add(Bits32 v1, Bits32 v2){ return v1.add(v2);}
+
+    
     
     private static Node xNodes[] = new Node[1024];
     static Node x(int i){
