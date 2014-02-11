@@ -146,7 +146,7 @@ public class Node {
         return v;
     }
     
-    char calcImpl(){
+    private char calcImpl(){
         //System.out.println("calc in node "+num);
         char aResult = a.calc();
         if (operation=='!') return Utils.not(aResult);
