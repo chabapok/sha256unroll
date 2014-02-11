@@ -24,7 +24,7 @@ public class Sha256Unroll {
     
     
     
-    public static void main3(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) throws NoSuchAlgorithmException {
         VariableManager vm = VariableManager.create(64*8);
         String pass ="The quick brown fox jumps over the lazy dog";
         
@@ -42,6 +42,8 @@ public class Sha256Unroll {
         }
         System.out.println();
         System.out.println(hash256(pass));
+        
+        System.out.println("Nodes count="+Node.ai.get());
     }
     
     
@@ -59,7 +61,7 @@ public class Sha256Unroll {
     
     
     
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main1(String[] args) throws NoSuchAlgorithmException {
         
                 
         VariableManager vars = VariableManager.create(4);
