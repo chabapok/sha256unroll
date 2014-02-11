@@ -19,6 +19,8 @@ public class Node {
     static int orCount = 0;
     static int xorCount = 0;
     static int notCount =0;
+    static int eCount=0;
+    static int cCount=0;
     
     String name;
     
@@ -49,6 +51,7 @@ public class Node {
             case '+': orCount++;break;
             case '*': andCount++; break;
             case '^': xorCount++;break;
+            case 'e': eCount++;break;
         }
     }
     
@@ -56,8 +59,11 @@ public class Node {
     public Node(char op, Node p1){
         a=p1;
         operation = op;
-        assert(op=='!');
-        notCount++;
+        if (op=='!')
+            notCount++;
+        else{
+            cCount++;
+        }
     }
     
     Collection<String> if0=null;
