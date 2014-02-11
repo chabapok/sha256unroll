@@ -14,7 +14,11 @@ import static sha256unroll.Utils.*;
  * @author chabapok
  */
 public class Node {
-    static AtomicInteger ai = new AtomicInteger();
+    static int allCount = 0;
+    static int andCount = 0;
+    static int orCount = 0;
+    static int xorCount = 0;
+    static int notCount =0;
     
     String name;
     
@@ -30,22 +34,30 @@ public class Node {
      */
     private char operation;
     
-    int num;
+    int nodeNum = allCount;
+    
+    {
+        allCount++;
+    }
     
     // or and xor
     public Node(char op, Node p1, Node p2){
         a=p1;
         b=p2;
         operation = op;
-        num = ai.incrementAndGet();
+        switch(op){
+            case '+': orCount++;break;
+            case '*': andCount++; break;
+            case '^': xorCount++;break;
+        }
     }
     
     //not
     public Node(char op, Node p1){
         a=p1;
         operation = op;
-        num = ai.incrementAndGet();
         assert(op=='!');
+        notCount++;
     }
     
     Collection<String> if0=null;
@@ -55,10 +67,16 @@ public class Node {
         if (v=='*') throw new RuntimeException("Зачем тогда звать? неважно же! "+name);
         
         if (v=='0'){ 
-            if (if0==null) if0 = probeValImpl(v);
+            if (if0==null) {
+                if0 = probeValImpl(v);
+                System.out.println("probe 0 for node "+nodeNum);
+            }
             return if0;
         }
-        if (if1==null) if1 = probeValImpl(v);
+        if (if1==null){
+            if1 = probeValImpl(v);
+            System.out.println("probe 1 for node "+nodeNum);
+        }
         return if1;
     }
     

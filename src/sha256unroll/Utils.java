@@ -115,6 +115,79 @@ public class Utils {
     
     
     
+    static Node[] consolidate(Bits8[] arr){
+        Node[] result = new Node[arr.length*8];
+        for(int i=0; i<arr.length; i++){
+            System.arraycopy(arr[i].nodes, 0, result, i*8, 8);
+        }
+        return result;
+    }
+    
+    
+    static byte[] fromHexString(String s){
+        if ( (s.length()&1) != 0) throw new RuntimeException("wrong string length");
+        byte[] result = new byte[s.length()/2];
+        for(int i=0, j=0; i<s.length(); i+=2, j++){
+            String v = s.substring(i, i+2);
+            int b = Integer.parseInt(v, 16);
+            result[j] = (byte) b;
+        }
+        return result;
+    }
+    
+    static char[] getBitset(byte[] arr){
+        
+        char[] result = new char[arr.length*8];
+        
+        for(int i=0; i<arr.length; i++){
+            byte a = arr[i];
+            for(int j=0; j<8; j++){
+                
+                char bit = ((a&1) == 0)? '0' : '1';
+                result[i*8+j] = bit;
+                
+                a = (byte) (a>>>1);
+            }
+        }
+        return result;
+    }
+    
+    static Collection<String> probeVal(char[] needValues, Bits8[] arr){
+        Node[] nodes = consolidate(arr);
+        if (needValues.length != nodes.length) 
+            throw new RuntimeException("Wrong lengths. NeedValues.len="+needValues.length+" and arr.size="+nodes.length+"bits");
+        
+        
+        Collection<String> results = null;
+        for(int i=0; i<nodes.length; i++){
+            
+            System.out.printf("Probe node [%d/%d]\n", i, nodes.length );
+            if (needValues[i]=='*') continue;
+            Collection<String> variants = nodes[i].probeVal( needValues[i] );
+            
+            if (results==null){
+                results = variants;
+            }else{
+                results = combineNotConflicted(results, variants);
+            }
+        }
+        return results;
+    }
+
+    
+    
+    
+    static Bits8[] createXVars(int symCount){
+        Bits8[] r = new Bits8[symCount];
+        
+        for(int i=0; i<r.length; i++){
+            r[i] = Bits8.createX();
+        }
+        return r;
+    }
+    
+    
+    
     static Bits8[] fromString(String v){
         byte[] symbols = v.getBytes();
         Bits8[] r = new Bits8[symbols.length];

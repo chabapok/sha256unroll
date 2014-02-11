@@ -33,7 +33,7 @@ public class ConsolidateSet extends ArrayList<String> {
     }
 
     void consolidate(Collection<String> arr) {
-        
+        System.out.println("Consolidate size="+arr.size()+":"+this.size() );
         ArrayList<String> arrToAdd = new ArrayList(arr.size() + size());
         arrToAdd.addAll(arr);
 
@@ -61,6 +61,8 @@ public class ConsolidateSet extends ArrayList<String> {
         }
     }
 
+    
+    static int counter=0;
     /**
      * Обрабатывает 2 ситуации:
      *
@@ -86,7 +88,11 @@ public class ConsolidateSet extends ArrayList<String> {
         if (aStr.length() != bStr.length()) {
             throw new RuntimeException("length not same a=" + aStr + " b=" + bStr);
         }
-        
+        /*
+        counter++;
+        if ((counter%100000)==0)
+            System.out.println(aStr);
+        */
         boolean aSetofB = true;
         boolean bSetofA = true;
        

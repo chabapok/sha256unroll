@@ -25,25 +25,53 @@ public class Sha256Unroll {
     
     
     public static void main(String[] args) throws NoSuchAlgorithmException {
-        VariableManager vm = VariableManager.create(64*8);
-        String pass ="The quick brown fox jumps over the lazy dog";
         
-        Bits8 [] b = Utils.fromString(pass);
+        String pass ="The quick brown fox jumps over the lazy dog";
+        int symCount = pass.length()*8;
+        
+        VariableManager vm = VariableManager.create(symCount);
+        
+        
+        //Bits8 [] b = Utils.fromString(pass);
+        Bits8 [] b = Utils.createXVars(symCount);
         Sha256 sha256 = new Sha256();
         sha256.update(b);
         
         Bits8[] digest = sha256.digest();
         System.out.println("digest calculated");
+        
+        
+        String hash = "d7a8fbb307d7809469ca9abcb0082e4f8d5651e46d3cdb762d02d0bf37c9e592";
+        byte[] bhash = Utils.fromHexString(hash);
+        char[] bits = Utils.getBitset(bhash);
+        
+
+        Collection<String> result = Utils.probeVal(bits, digest);
+        
+        
+        for(String variant: result){
+            System.out.println(variant);
+        }
+        
+        
+        /*
         int i=0;
         for(Bits8 r: digest){
             r.name = "x"+i;
             i++;
             System.out.print(r.hexStr());
         }
+        */
+        
+        
         System.out.println();
         System.out.println(hash256(pass));
         
-        System.out.println("Nodes count="+Node.ai.get());
+        System.out.println("Nodes allCount="+Node.allCount);
+        System.out.println("Nodes andCount="+Node.andCount);
+        System.out.println("Nodes orCount="+Node.orCount);
+        System.out.println("Nodes xorCount="+Node.xorCount);
+        System.out.println("Nodes notCount="+Node.notCount);
     }
     
     
