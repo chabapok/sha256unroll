@@ -33,4 +33,13 @@ public class Bits8 {
         return (byte)v;
     }
 
+    
+    
+    String hexStr() {
+        byte b = toByte();
+        String s = Integer.toHexString( b & 0xff );
+        if (s.length()==1) s= '0'+s;
+        return s;
+    }
+
 }

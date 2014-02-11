@@ -6,7 +6,7 @@ import java.util.ArrayList;
  *
  * @author chabapok
  */
-public class sha256 {
+public class Sha256 {
 
     final int BLOCK_SIZE = 64;
 
@@ -38,12 +38,33 @@ public class sha256 {
 
     private final Bits32 k[];
 
-    sha256() {
+    Sha256() {
         k = new Bits32[64];
         for (int i = 0; i < 64; i++) {
             k[i] = Bits32.create(k_[i]);
         }
+        resetContext();
     }
+    
+   public Bits8[] digest() {
+      Bits8[] tail = padBuffer(); // pad remaining bytes in buffer
+      update(tail, 0, tail.length); // last transform of a message
+      Bits8[] result = getResult(); // make a result out of context
+
+      reset(); // reset this instance for future re-use
+
+      return result;
+   }
+   
+   
+   public void reset() { // reset this instance for future re-use
+      count = 0;
+      for (int i = 0; i < BLOCK_SIZE; ) {
+         buffer[i++] = Bits8.create(0);
+      }
+      resetContext();
+   }
+
 
     public void update(Bits8[] b) {
         update(b, 0, b.length);
@@ -97,7 +118,8 @@ public class sha256 {
         int n = (int) (count % BLOCK_SIZE);
         int padding = (n < 56) ? (56 - n) : (120 - n);
         Bits8[] result = new Bits8[padding + 8];
-
+        
+        for(int i=0; i<result.length; i++) result[i] = Bits8.create(0);
         // padding is always binary 1 followed by binary 0s
         result[0] = Bits8.create(0x80);
 
@@ -191,7 +213,6 @@ public class sha256 {
             //Σ1 := (e rotr 6) xor (e rotr 11) xor (e rotr 25)
             //Ch := (e and f) xor ((not e) and g)
             //t1 := h + Σ1 + Ch + k[i] + w[i]
-
             S0 = A.rr(2).xor(A.rr(13)).xor(A.rr(22));
             Ma = A.and(B).xor(A.and(C)).xor(B.and(C));
             t2 = S0.add(Ma);

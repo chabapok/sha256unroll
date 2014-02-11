@@ -25,6 +25,23 @@ public class Sha256Unroll {
     
     
     public static void main(String[] args) throws NoSuchAlgorithmException {
+        VariableManager vm = VariableManager.create(64*8);
+        String pass ="The quick brown fox jumps over the lazy dog";
+        
+        Bits8 [] b = Utils.fromString(pass);
+        Sha256 sha256 = new Sha256();
+        sha256.update(b);
+        
+        Bits8[] digest = sha256.digest();
+        for(Bits8 r: digest){
+            System.out.print(r.hexStr());
+        }
+        System.out.println();
+        System.out.println(hash256(pass));
+    }
+    
+    
+    public static void main2(String[] args) throws NoSuchAlgorithmException {
         VariableManager vm = VariableManager.create(8);
                 
         Bits8 [] b = Utils.fromString("The quick brown fox jumps over the lazy dog");
