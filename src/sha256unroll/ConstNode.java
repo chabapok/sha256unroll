@@ -31,6 +31,13 @@ public class ConstNode extends Node{
     @Override
     char calc(){
         //System.out.println("calc in node "+num);
+        /*
+        try{
+            throw new Exception("asd");
+        }catch(Exception e){
+            String v = "Stack trace size="+e.getStackTrace().length;
+            System.out.println(v);
+        }*/
         return needVal;
     }
 
