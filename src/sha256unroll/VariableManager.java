@@ -3,6 +3,7 @@ package sha256unroll;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  *
@@ -19,18 +20,25 @@ public class VariableManager {
     
     
     private char[] initialConditions;
+    Collection<String> initialCond;
+    
     
     private VariableManager(int varCount){
         initialConditions = new char[varCount];
         Arrays.fill(initialConditions, '*');
+        recalcInitialCond();
+    }
+
+    
+    void recalcInitialCond(){
+        String v=String.valueOf(initialConditions);
+        initialCond = new ArrayList();
+        initialCond.add(v);
+        //initialCond = Collections.unmodifiableCollection(initialCond);
     }
     
     
-    
     Collection<String> getInitial(){
-        String v=String.valueOf(initialConditions);
-        ArrayList<String> initialCond = new ArrayList();
-        initialCond.add(v);
         return initialCond;
     }
     
@@ -84,14 +92,17 @@ public class VariableManager {
     
     void init(int varnum, char v) {
         initialConditions[varIndex(varnum)] = v;
+        recalcInitialCond();
     }
 
     void init(String vars){
         initialConditions = vars.toCharArray();
+        recalcInitialCond();
     }
     
     void reset(){
         Arrays.fill(initialConditions, '*');
+        recalcInitialCond();
     }
     
     private int varIndex(int varNum){

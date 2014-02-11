@@ -24,7 +24,7 @@ public class Sha256Unroll {
     
     
     
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main3(String[] args) throws NoSuchAlgorithmException {
         VariableManager vm = VariableManager.create(64*8);
         String pass ="The quick brown fox jumps over the lazy dog";
         
@@ -59,12 +59,9 @@ public class Sha256Unroll {
     
     
     
-    public static void main1(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) throws NoSuchAlgorithmException {
         
-        
-        String sss = hash256("The quick brown fox jumps over the lazy dog");
-        System.out.println("s="+sss);
-        
+                
         VariableManager vars = VariableManager.create(4);
 
         EndNode x1 = vars.node(0);
@@ -104,13 +101,18 @@ public class Sha256Unroll {
         m13.name = "m13";
 
         //Node result = or(m1, m4, m6, m8);result.name = "result";
-        Node result = or(m1, m4, m6, m8, m13);
+        Node result = or(m1, m4, m6, m8);
         result.name = "result";
 
-       // printTablIst(vars, result, 4);
-        vars.init(3, '1');
+        ///printTablIst(vars, result, 4);
+        
+        //vars.init(3, '1');
         printVariants(result);
-
+        //v0=[**00, 0**0, 011*]
+        //v1=[**01, *0*1, 1**1, 1*1*]
+        
+        
+        /*
         vars = VariableManager.create(32);
 
         Bits32 v1 = Bits32.create(20);
@@ -136,7 +138,9 @@ public class Sha256Unroll {
         System.out.println(yy.calcBinary());
         yy = xx.shr(2);
         System.out.println(yy.calcBinary());
-
+*/
+        
+        
         /*
          vars = VariableManager.create(2);
          x1 = vars.createNext();

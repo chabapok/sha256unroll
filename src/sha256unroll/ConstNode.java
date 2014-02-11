@@ -21,7 +21,7 @@ public class ConstNode extends Node{
 
     @Override
     public Collection<String> probeVal(char v) {
-        return v==needVal ? varManager.getInitial() : new ArrayList(0);
+        return v==needVal ? varManager.getInitial() : Collections.EMPTY_LIST;
     }
     
     @Override
