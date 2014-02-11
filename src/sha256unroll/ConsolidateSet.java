@@ -33,16 +33,16 @@ public class ConsolidateSet extends ArrayList<String> {
     }
 
     void consolidate(Collection<String> arr) {
-        if (isEmpty() && !arr.isEmpty()) {
-            for (String s : arr) {
-                add(s);
-                arr.remove(s);
-                break;
-            }
+        
+        ArrayList<String> arrToAdd = new ArrayList(arr.size() + size());
+        arrToAdd.addAll(arr);
+
+        
+        if (isEmpty() && !arrToAdd.isEmpty()) {
+            String s = arrToAdd.remove(arrToAdd.size()-1);
+            add(s);
         }
 
-        ArrayList<String> arrToAdd = new ArrayList(arr.size() * 2);
-        arrToAdd.addAll(arr);
 
         metka:
         for (int j = 0; j < arrToAdd.size(); j++) {
