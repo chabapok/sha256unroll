@@ -24,7 +24,7 @@ public class Sha256Unroll {
     
     
     
-    public static void main3(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) throws NoSuchAlgorithmException {
         
         String pass ="The quick brown fox jumps over the lazy dog";
         int symCount = pass.length()*8;
@@ -39,6 +39,13 @@ public class Sha256Unroll {
         
         Bits8[] digest = sha256.digest();
         System.out.println("digest calculated");
+        System.out.println("Nodes allCount="+Node.allCount);
+        System.out.println("Nodes andCount="+Node.andCount);
+        System.out.println("Nodes orCount="+Node.orCount);
+        System.out.println("Nodes xorCount="+Node.xorCount);
+        System.out.println("Nodes notCount="+Node.notCount);
+        System.out.println();
+        System.out.println(hash256(pass));
         
         
         String hash = "d7a8fbb307d7809469ca9abcb0082e4f8d5651e46d3cdb762d02d0bf37c9e592";
@@ -64,14 +71,7 @@ public class Sha256Unroll {
         */
         
         
-        System.out.println();
-        System.out.println(hash256(pass));
         
-        System.out.println("Nodes allCount="+Node.allCount);
-        System.out.println("Nodes andCount="+Node.andCount);
-        System.out.println("Nodes orCount="+Node.orCount);
-        System.out.println("Nodes xorCount="+Node.xorCount);
-        System.out.println("Nodes notCount="+Node.notCount);
     }
     
     
@@ -89,7 +89,7 @@ public class Sha256Unroll {
     
     
     
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main1(String[] args) throws NoSuchAlgorithmException {
         
                 
         VariableManager vars = VariableManager.create(4);
