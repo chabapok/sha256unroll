@@ -68,7 +68,8 @@ public class Utils {
     
     static Collection<String> removeDupes(Collection<String> aArr, Collection<String> bArr){
         ConsolidateSet result = new ConsolidateSet( aArr.size()+bArr.size() );
-        result.consolidate(aArr);
+        //result.consolidate(aArr);
+        result.addAll(aArr);
         result.consolidate(bArr);        
         return result;
     }

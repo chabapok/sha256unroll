@@ -24,7 +24,7 @@ public class Sha256Unroll {
     
     
     
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main3(String[] args) throws NoSuchAlgorithmException {
         
         String pass ="The quick brown fox jumps over the lazy dog";
         int symCount = pass.length()*8;
@@ -89,7 +89,7 @@ public class Sha256Unroll {
     
     
     
-    public static void main1(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) throws NoSuchAlgorithmException {
         
                 
         VariableManager vars = VariableManager.create(4);
@@ -141,6 +141,8 @@ public class Sha256Unroll {
         //v0=[**00, 0**0, 011*]
         //v1=[**01, *0*1, 1**1, 1*1*]
         
+        //v0=[**00, 0**0, 011*]
+        //v1=[*0*1, **01, 1**1, 1*1*]
         
         /*
         vars = VariableManager.create(32);

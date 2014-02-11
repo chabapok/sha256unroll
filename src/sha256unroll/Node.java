@@ -69,13 +69,13 @@ public class Node {
         if (v=='0'){ 
             if (if0==null) {
                 if0 = probeValImpl(v);
-                System.out.println("probe 0 for node "+nodeNum);
+               // System.out.println("probe 0 for node "+nodeNum);
             }
             return if0;
         }
         if (if1==null){
             if1 = probeValImpl(v);
-            System.out.println("probe 1 for node "+nodeNum);
+            //System.out.println("probe 1 for node "+nodeNum);
         }
         return if1;
     }

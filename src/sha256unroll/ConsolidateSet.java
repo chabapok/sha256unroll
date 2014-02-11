@@ -33,7 +33,7 @@ public class ConsolidateSet extends ArrayList<String> {
     }
 
     void consolidate(Collection<String> arr) {
-        System.out.println("Consolidate size="+arr.size()+":"+this.size() );
+       // System.out.println("Consolidate size="+arr.size()+":"+this.size() );
         ArrayList<String> arrToAdd = new ArrayList(arr.size() + size());
         arrToAdd.addAll(arr);
 
@@ -97,32 +97,23 @@ public class ConsolidateSet extends ArrayList<String> {
         boolean bSetofA = true;
        
         int maskReplacePos = -1;
-        boolean aMod=true;
         
         for (int i = 0; i < aStr.length(); i++) {
             char a = aStr.charAt(i);
-            char b = bStr.charAt(i);
-
+            char b = bStr.charAt(i);        
             //проверка, что а - все еще надмножество (и значит б-подмножесто)
-            if ( !mayConverted(a, b) ){
-                bSetofA = false;
-            }
-
-            if ( !mayConverted(b, a)){
-                aSetofB = false;
-            }
-            
-            if ( maskReplacePos != -2 ){
-                if (a!=b) {
-                    if (aMod){
-                        aMod = false;
+            if (a!=b){
+                if (a!='*') bSetofA = false;
+                if (b!='*') aSetofB = false;
+                if ( maskReplacePos != -2 ){
+                    if (maskReplacePos==-1){
                         maskReplacePos=i;
                     }else{
                         maskReplacePos=-2;
-                    }
+                    }                    
                 }
+                if (!bSetofA && !aSetofB && maskReplacePos==-2) return null;
             }
-                        
         }
         
         if (maskReplacePos>=0){
@@ -131,8 +122,9 @@ public class ConsolidateSet extends ArrayList<String> {
             return String.valueOf(chars);
         }
         if (aSetofB) return bStr;
-        if (bSetofA) return aStr;
-        return null;
+        //if (bSetofA) return aStr;
+        return aStr;
+        //return null;
     }
 
 }
