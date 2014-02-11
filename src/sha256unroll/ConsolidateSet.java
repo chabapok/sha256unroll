@@ -88,11 +88,11 @@ public class ConsolidateSet extends ArrayList<String> {
         if (aStr.length() != bStr.length()) {
             throw new RuntimeException("length not same a=" + aStr + " b=" + bStr);
         }
-        /*
-        counter++;
-        if ((counter%100000)==0)
-            System.out.println(aStr);
-        */
+        
+        //counter++;
+        //if ((counter%100000)==0)
+         //   System.out.println(aStr);
+        
         boolean aSetofB = true;
         boolean bSetofA = true;
        

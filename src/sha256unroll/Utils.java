@@ -24,6 +24,7 @@ public class Utils {
     }
     
     static Collection<String> combineNotConflicted(Collection<String> aArr, Collection<String> bArr){
+        System.out.print("Combine "+aArr.size()+":"+bArr.size());
         ConsolidateSet result = new ConsolidateSet( aArr.size() + bArr.size() );
         
         for(String aVariant:aArr ){
@@ -32,7 +33,7 @@ public class Utils {
                 if (combined!=null) result.consolidate(combined);
             }    
         }
-        
+        System.out.println("-->"+result.size());
         return result;
     }
 
@@ -67,10 +68,12 @@ public class Utils {
     
     
     static Collection<String> removeDupes(Collection<String> aArr, Collection<String> bArr){
+        System.out.print("RemoveDupes "+aArr.size()+":"+bArr.size());
         ConsolidateSet result = new ConsolidateSet( aArr.size()+bArr.size() );
         //result.consolidate(aArr);
         result.addAll(aArr);
-        result.consolidate(bArr);        
+        result.consolidate(bArr);
+        System.out.println("-->"+result.size());
         return result;
     }
 

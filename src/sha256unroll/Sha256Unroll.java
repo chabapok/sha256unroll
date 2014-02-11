@@ -29,7 +29,7 @@ public class Sha256Unroll {
         String pass ="The quick brown fox jumps over the lazy dog";
         int symCount = pass.length();
         
-        VariableManager vm = VariableManager.create(symCount);
+        VariableManager vm = VariableManager.create(symCount*8);
         
         System.out.println("Nodes eCount="+Node.eCount);
         //Bits8 [] b = Utils.fromString(pass);
