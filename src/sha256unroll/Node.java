@@ -48,9 +48,24 @@ public class Node {
         assert(op=='!');
     }
     
-       
+    Collection<String> if0=null;
+    Collection<String> if1=null;
+    
     public Collection<String> probeVal(char v){
         if (v=='*') throw new RuntimeException("Зачем тогда звать? неважно же! "+name);
+        
+        if (v=='0'){ 
+            if (if0==null) if0 = probeValImpl(v);
+            return if0;
+        }
+        if (if1==null) if1 = probeValImpl(v);
+        return if1;
+    }
+    
+    
+    private Collection<String> probeValImpl(char v){
+        
+        
         Collection<String> c;
         switch(operation){
             case '!': c = not(v); break;
