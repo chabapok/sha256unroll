@@ -33,7 +33,11 @@ public class Sha256Unroll {
         sha256.update(b);
         
         Bits8[] digest = sha256.digest();
+        System.out.println("digest calculated");
+        int i=0;
         for(Bits8 r: digest){
+            r.name = "x"+i;
+            i++;
             System.out.print(r.hexStr());
         }
         System.out.println();

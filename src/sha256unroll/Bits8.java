@@ -1,6 +1,7 @@
 package sha256unroll;
 
 public class Bits8 {
+    String name;
     
     Node[] nodes = new Node[8];
     
@@ -25,6 +26,7 @@ public class Bits8 {
     byte toByte() {
         int v =0;
         for(int i=0; i<8; i++){
+            //System.out.println("calc "+name+"."+i);
             char r = nodes[i].calc();
             v = v>>>1;
             if(r=='1') v = v | 128;

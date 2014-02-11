@@ -30,6 +30,7 @@ public class ConstNode extends Node{
     
     @Override
     char calc(){
+        //System.out.println("calc in node "+num);
         return needVal;
     }
 

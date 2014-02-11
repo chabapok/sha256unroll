@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static sha256unroll.Utils.*;
 
@@ -13,11 +14,12 @@ import static sha256unroll.Utils.*;
  * @author chabapok
  */
 public class Node {
+    static AtomicInteger ai = new AtomicInteger();
     
     String name;
     
-    Node a;
-    Node b;
+    private Node a;
+    private Node b;
     
     /**
      * 
@@ -26,19 +28,23 @@ public class Node {
      * +*^c
      * 
      */
-    char operation;
+    private char operation;
+    
+    int num;
     
     // or and xor
     public Node(char op, Node p1, Node p2){
         a=p1;
         b=p2;
         operation = op;
+        num = ai.incrementAndGet();
     }
     
     //not
     public Node(char op, Node p1){
         a=p1;
         operation = op;
+        num = ai.incrementAndGet();
         assert(op=='!');
     }
     
@@ -119,7 +125,14 @@ public class Node {
     boolean isConst(){return false;}
     
     
+    char v='x';
     char calc(){
+        if (v=='x') v = calcImpl();
+        return v;
+    }
+    
+    char calcImpl(){
+        //System.out.println("calc in node "+num);
         char aResult = a.calc();
         if (operation=='!') return Utils.not(aResult);
         char bResult = b.calc();
