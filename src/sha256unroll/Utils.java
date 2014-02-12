@@ -30,14 +30,20 @@ public class Utils {
         return r;
     }
     
+    static int counter=0;
+    
     static Collection<String> combineNotConflicted(Collection<String> aArr, Collection<String> bArr){
-        System.out.println("Combine "+aArr.size()+":"+bArr.size());
+        /*
+        counter++;
+        if ((counter%1000)==0)
+            System.out.println("Combine "+aArr.size()+":"+bArr.size());
+        */
         ConsolidateSet result = new ConsolidateSet( aArr.size() + bArr.size() );
         
         int i=0,j=0;
         
         for(String aVariant:aArr ){
-            System.out.printf("\rCombine  "+i+":"+j+":"+result.size());
+            //System.out.printf("\rCombine  "+i+":"+j+":"+result.size());
             i++;
             j=0;
             for(String bVariant:bArr ){
@@ -46,7 +52,7 @@ public class Utils {
                 j++;
             }    
         }
-        System.out.println("-->"+result.size());
+        //System.out.println("-->"+result.size());
         return result;
     }
 

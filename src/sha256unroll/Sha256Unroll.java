@@ -24,16 +24,21 @@ public class Sha256Unroll {
     
     
     
-    public static void main0(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) throws NoSuchAlgorithmException {
         
         String pass ="The quick brown fox jumps over the lazy dog";
         int symCount = pass.length();
         
-        VariableManager vm = VariableManager.create(symCount*8);
+        int n=1;
+        VariableManager vm = VariableManager.create(n*8);
         
         System.out.println("Nodes eCount="+Node.eCount);
         //Bits8 [] b = Utils.fromString(pass);
-        Bits8 [] b = Utils.createXVars(symCount);
+        Bits8 [] b0 = Utils.createXVars(n);
+        Bits8[] b1 = Utils.fromString(pass.substring(b0.length));
+        Bits8[] b = new Bits8[b0.length+b1.length];
+        System.arraycopy(b0, 0, b, 0, b0.length);
+        System.arraycopy(b1, 0, b, b0.length, b1.length);
         
         System.out.println("Nodes eCount="+Node.eCount);
         
@@ -225,7 +230,7 @@ public class Sha256Unroll {
     }
     
     
-    public static void main(String [] arg){
+    public static void main3(String [] arg){
         VariableManager vars = VariableManager.create(32);
 
         int p = 0x3ff;
