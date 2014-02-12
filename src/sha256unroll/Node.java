@@ -52,8 +52,8 @@ public class Node {
     //sum or carry
     public Node(char op, Node aa, Node bb, Node cc){
         if (op!='C' && op!='S') throw new RuntimeException("Wrong operation");
-        a=aa;
-        b=bb;
+        a = aa;
+        b = bb;
         c = cc;
         operation = op;
         switch(op){
@@ -219,6 +219,22 @@ public class Node {
                 if (aResult=='0' && bResult=='1') return '1';
                 if (aResult=='1' && bResult=='0') return '1';
                 return '?';
+                
+            case 'C':
+                char cResult = c.calc();
+                if (
+                        (aResult=='1' && bResult=='1') ||
+                        (cResult=='1' && bResult=='1') ||
+                        (cResult=='1' && aResult=='1')
+                        ) return '1';
+                return '0';
+                
+            case 'S':
+                cResult = c.calc();
+                String s = ""+aResult+bResult+cResult;
+                if ("001".equals(s) || "010".equals(s) || "100".equals(s) || "111".equals(s)) 
+                    return '1';
+                return '0';
         }
         throw new RuntimeException("Unknow operation "+operation);
     }
@@ -227,11 +243,70 @@ public class Node {
     
     
     private Collection<String> carry(char v) {
-        return null;
+        Collection<String> a0 = a.probeVal('0');
+        Collection<String> a1 = a.probeVal('1');
+        
+        Collection<String> b0 = b.probeVal('0');
+        Collection<String> b1 = b.probeVal('1');
+
+        Collection<String> c0 = c.probeVal('0');
+        Collection<String> c1 = c.probeVal('1');
+        
+        if (v=='0'){
+            Collection<String> r0 = combineNotConflicted(a0, b0, c0);
+            Collection<String> r1 = combineNotConflicted(a0, b1, c0);
+            Collection<String> r2 = combineNotConflicted(a1, b0, c0);
+            Collection<String> r3 = combineNotConflicted(a0, b0, c1);
+            
+            Collection<String> r4 = removeDupes(r0, r1);
+            Collection<String> r5 = removeDupes(r2, r3);
+            Collection<String> r6 = removeDupes(r4, r5);
+            return r6;            
+        }else{
+            Collection<String> r0 = combineNotConflicted(a1, b1, c0);
+            Collection<String> r1 = combineNotConflicted(a0, b1, c1);
+            Collection<String> r2 = combineNotConflicted(a1, b0, c1);
+            Collection<String> r3 = combineNotConflicted(a1, b1, c1);
+            
+            Collection<String> r4 = removeDupes(r0, r1);
+            Collection<String> r5 = removeDupes(r2, r3);
+            Collection<String> r6 = removeDupes(r4, r5);
+            return r6;            
+        }
     }
     
     
     private Collection<String> sum(char v) {
-        return null;
+
+        Collection<String> a0 = a.probeVal('0');
+        Collection<String> a1 = a.probeVal('1');
+        
+        Collection<String> b0 = b.probeVal('0');
+        Collection<String> b1 = b.probeVal('1');
+
+        Collection<String> c0 = c.probeVal('0');
+        Collection<String> c1 = c.probeVal('1');
+        
+        if (v=='0'){
+            Collection<String> r0 = combineNotConflicted(a0, b0, c0);
+            Collection<String> r1 = combineNotConflicted(a1, b1, c0);
+            Collection<String> r2 = combineNotConflicted(a0, b1, c1);
+            Collection<String> r3 = combineNotConflicted(a1, b0, c1);
+            
+            Collection<String> r4 = removeDupes(r0, r1);
+            Collection<String> r5 = removeDupes(r2, r3);
+            Collection<String> r6 = removeDupes(r4, r5);
+            return r6;
+        }else{
+            Collection<String> r0 = combineNotConflicted(a0, b1, c0);
+            Collection<String> r1 = combineNotConflicted(a1, b0, c0);
+            Collection<String> r2 = combineNotConflicted(a0, b0, c1);
+            Collection<String> r3 = combineNotConflicted(a1, b1, c1);
+            
+            Collection<String> r4 = removeDupes(r0, r1);
+            Collection<String> r5 = removeDupes(r2, r3);
+            Collection<String> r6 = removeDupes(r4, r5);
+            return r6;
+        }
     }
 }

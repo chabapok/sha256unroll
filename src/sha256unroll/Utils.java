@@ -23,14 +23,21 @@ public class Utils {
         return a==b || (a=='*');
     }
     
+    
+    static Collection<String> combineNotConflicted(Collection<String> aArr, Collection<String> bArr, Collection<String> cArr){
+        Collection<String> rr = combineNotConflicted(aArr, bArr);
+        Collection<String> r = combineNotConflicted(rr, cArr);
+        return r;
+    }
+    
     static Collection<String> combineNotConflicted(Collection<String> aArr, Collection<String> bArr){
-        System.out.println("Combine "+aArr.size()+":"+bArr.size());
+       // System.out.println("Combine "+aArr.size()+":"+bArr.size());
         ConsolidateSet result = new ConsolidateSet( aArr.size() + bArr.size() );
         
         int i=0,j=0;
         
         for(String aVariant:aArr ){
-            System.out.printf("\rCombine  "+i+":"+j+":"+result.size());
+            //System.out.printf("\rCombine  "+i+":"+j+":"+result.size());
             i++;
             j=0;
             for(String bVariant:bArr ){
@@ -39,7 +46,7 @@ public class Utils {
                 j++;
             }    
         }
-        System.out.println("-->"+result.size());
+       // System.out.println("-->"+result.size());
         return result;
     }
 
@@ -73,15 +80,22 @@ public class Utils {
     }
     
     
+    static Collection<String> removeDupes(Collection<String> aArr, Collection<String> bArr, Collection<String> cArr){
+        Collection<String> rr = removeDupes(aArr, bArr);
+        Collection<String> r = removeDupes(rr, cArr);
+        return r;
+    }
+    
     static Collection<String> removeDupes(Collection<String> aArr, Collection<String> bArr){
         int tSize=aArr.size()+bArr.size();
-        System.out.print("rd "+aArr.size()+":"+bArr.size());
+        //System.out.print("rd "+aArr.size()+":"+bArr.size());
         ConsolidateSet result = new ConsolidateSet( aArr.size()+bArr.size() );
         result.consolidate(aArr);
         //result.addAll(aArr);
         result.consolidate(bArr);
-        if (result.size()<tSize) System.out.println("Real RemoveDupes! -> "+result.size() );
-        else System.out.println("-->"+result.size());
+        
+        //if (result.size()<tSize) System.out.println("Real RemoveDupes! -> "+result.size() );
+        //else System.out.println("-->"+result.size());
         return result;
     }
 
@@ -105,6 +119,14 @@ public class Utils {
     static Node and(Node ... args){ return op('*', args); }
     static Node xor(Node ... args){ return op('^', args); }
     static Node not(Node arg){      return new Node('!', arg); }
+    
+    static Node sum(Node a, Node b, Node c){
+        return new Node('S', a,b,c);
+    }
+    
+    static Node carry(Node a, Node b, Node c){
+        return new Node('C', a,b,c);
+    }
     
  
     static Bits32 and(Bits32 a, Bits32 b){return a.and(b);}

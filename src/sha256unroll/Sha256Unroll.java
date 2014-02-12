@@ -24,7 +24,7 @@ public class Sha256Unroll {
     
     
     
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main5(String[] args) throws NoSuchAlgorithmException {
         
         String pass ="The quick brown fox jumps over the lazy dog";
         int symCount = pass.length();
@@ -205,6 +205,22 @@ public class Sha256Unroll {
         System.out.println("v1=" + variants1);
     }
 
+    
+    public static void main(String[] args) throws NoSuchAlgorithmException {
+        
+                
+        VariableManager vars = VariableManager.create(3);
+
+        EndNode x1 = vars.node(0);
+        EndNode x2 = vars.node(1);
+        EndNode x3 = vars.node(2);
+        
+        //Node m1 = sum(x1, x2, x3);
+        Node m1 = carry(x1, x2, x3);
+        printVariants(m1);
+    }
+    
+    
     static void printTablIst(VariableManager vm, Node result, int bitCount) {
 
         for (int i = 0; i < Math.pow(2, bitCount); i++) {
