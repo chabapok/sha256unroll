@@ -115,6 +115,7 @@ public class Sha256 {
     }
 
     protected Bits8[] padBuffer() {
+        Node.currLevel = "padBudder";
         int n = (int) (count % BLOCK_SIZE);
         int padding = (n < 56) ? (56 - n) : (120 - n);
         Bits8[] result = new Bits8[padding + 8];
@@ -177,8 +178,9 @@ public class Sha256 {
         Bits32 T, T2;
 
         Bits32 S0, S1, Ma, Ch, t1, t2;
-
+        
         for (r = 0; r < 16; r++) {
+            Node.currLevel = "r["+r+"]";
             /*
              w[r] = in[offset++]         << 24 |
              (in[offset++] & 0xFF) << 16 |
@@ -189,8 +191,9 @@ public class Sha256 {
             w[r] = Bits32.fromBits8Arr(in[offset], in[offset + 1], in[offset + 2], in[offset + 3]);
             offset += 4;
         }
-
+        
         for (r = 16; r < 64; r++) {
+            Node.currLevel = "r["+r+"]";
             T = w[r - 2];
             T2 = w[r - 15];
             /*
@@ -207,6 +210,7 @@ public class Sha256 {
         }
 
         for (r = 0; r < 64; r++) {
+            Node.currLevel = "lev["+r+"]";
           //Σ0 := (a rotr 2) xor (a rotr 13) xor (a rotr 22)
             //Ma := (a and b) xor (a and c) xor (b and c)
             //t2 := Σ0 + Ma

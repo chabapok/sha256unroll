@@ -11,21 +11,19 @@ import static sha256unroll.Utils.mayConverted;
  */
 public class ConsolidateSet extends ArrayList<String> {
 
-    ConsolidateSet(){
+    ConsolidateSet() {
         super();
     }
-    
 
-    ConsolidateSet(int capacity){
+    ConsolidateSet(int capacity) {
         super(capacity);
     }
 
-    
-    void consolidate(String... args){
+    void consolidate(String... args) {
         ArrayList<String> al = new ArrayList(Arrays.asList(args));
         consolidate(al);
     }
-    
+
     void consolidate(String v) {
         ArrayList al = new ArrayList(1);
         al.add(v);
@@ -33,16 +31,14 @@ public class ConsolidateSet extends ArrayList<String> {
     }
 
     void consolidate(Collection<String> arr) {
-       // System.out.println("Consolidate size="+arr.size()+":"+this.size() );
+        // System.out.println("Consolidate size="+arr.size()+":"+this.size() );
         ArrayList<String> arrToAdd = new ArrayList(arr.size() + size());
         arrToAdd.addAll(arr);
 
-        
         if (isEmpty() && !arrToAdd.isEmpty()) {
-            String s = arrToAdd.remove(arrToAdd.size()-1);
+            String s = arrToAdd.remove(arrToAdd.size() - 1);
             add(s);
         }
-
 
         metka:
         for (int j = 0; j < arrToAdd.size(); j++) {
@@ -61,8 +57,8 @@ public class ConsolidateSet extends ArrayList<String> {
         }
     }
 
-    
-    static int counter=0;
+    static int counter = 0;
+
     /**
      * Обрабатывает 2 ситуации:
      *
@@ -85,46 +81,38 @@ public class ConsolidateSet extends ArrayList<String> {
      * @return
      */
     private String calcSetOf(String aStr, String bStr) {
-        if (aStr.length() != bStr.length()) {
+        if (aStr.length() == bStr.length()) {
+
+            //counter++;
+            //if ((counter%100000)==0)
+            //   System.out.println(aStr);
+            boolean aSetofB = true;
+            boolean bSetofA = true;
+
+            for (int i = 0; i < aStr.length(); i++) {
+                char a = aStr.charAt(i);
+                char b = bStr.charAt(i);
+                //проверка, что а - все еще надмножество (и значит б-подмножесто)
+                if (a != b) {
+                    if (a != '*') {
+                        bSetofA = false;
+                    }
+
+                    if (b != '*') {
+                        aSetofB = false;
+                    }
+
+                    if (!(bSetofA || aSetofB)) {
+                        return null;
+                    }
+                }
+            }
+
+            return aSetofB ? bStr : aStr;
+
+        } else {
             throw new RuntimeException("length not same a=" + aStr + " b=" + bStr);
         }
-        
-        //counter++;
-        //if ((counter%100000)==0)
-         //   System.out.println(aStr);
-        
-        boolean aSetofB = true;
-        boolean bSetofA = true;
-       
-        int maskReplacePos = -1;
-        
-        for (int i = 0; i < aStr.length(); i++) {
-            char a = aStr.charAt(i);
-            char b = bStr.charAt(i);        
-            //проверка, что а - все еще надмножество (и значит б-подмножесто)
-            if (a!=b){
-                if (a!='*') bSetofA = false;
-                if (b!='*') aSetofB = false;
-                if ( maskReplacePos != -2 ){
-                    if (maskReplacePos==-1){
-                        maskReplacePos=i;
-                    }else{
-                        maskReplacePos=-2;
-                    }                    
-                }
-                if (!bSetofA && !aSetofB && maskReplacePos==-2) return null;
-            }
-        }
-        
-        if (maskReplacePos>=0){
-            char[] chars = aStr.toCharArray();
-            chars[maskReplacePos] = '*';
-            return String.valueOf(chars);
-        }
-        if (aSetofB) return bStr;
-        //if (bSetofA) return aStr;
-        return aStr;
-        //return null;
     }
 
 }

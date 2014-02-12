@@ -21,11 +21,16 @@ public class Node {
     static int notCount =0;
     static int eCount=0;
     static int cCount=0;
+    static int sumCount=0;
+    static int carryCount=0;
+    
+    static String currLevel;
     
     String name;
     
     private Node a;
     private Node b;
+    private Node c;
     
     /**
      * 
@@ -37,9 +42,24 @@ public class Node {
     private char operation;
     
     int nodeNum = allCount;
+    String level = currLevel;
     
     {
         allCount++;
+    }
+    
+    
+    //sum or carry
+    public Node(char op, Node aa, Node bb, Node cc){
+        if (op!='C' && op!='S') throw new RuntimeException("Wrong operation");
+        a=aa;
+        b=bb;
+        c = cc;
+        operation = op;
+        switch(op){
+            case 'S': sumCount++;break;
+            case 'C': carryCount++;break;
+        }
     }
     
     // or and xor
@@ -74,14 +94,16 @@ public class Node {
         
         if (v=='0'){ 
             if (if0==null) {
+                System.out.print("probe 0 for node "+nodeNum+"  level="+level);System.out.flush();
                 if0 = probeValImpl(v);
-                System.out.println("probe 0 for node "+nodeNum+" size="+if0.size());
+                System.out.println(" if0 size= "+if0.size());
             }
             return if0;
         }
         if (if1==null){
+            System.out.print("probe 1 for node "+nodeNum+"  level="+level );System.out.flush();
             if1 = probeValImpl(v);
-            System.out.println("probe 1 for node "+nodeNum+" size="+if0.size() );
+            System.out.println(" if1 size= "+if1.size());
         }
         return if1;
     }
@@ -96,6 +118,8 @@ public class Node {
             case '+': c = or(v); break;
             case '*': c = and(v); break;
             case '^': c = xor(v); break;
+            case 'C': c = carry(v); break;
+            case 'S': c = sum(v); break;    
             default: throw new RuntimeException("Wrong operation "+operation);
         }
         
@@ -199,4 +223,15 @@ public class Node {
         throw new RuntimeException("Unknow operation "+operation);
     }
     
+    
+    
+    
+    private Collection<String> carry(char v) {
+        return null;
+    }
+    
+    
+    private Collection<String> sum(char v) {
+        return null;
+    }
 }

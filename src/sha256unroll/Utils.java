@@ -24,13 +24,19 @@ public class Utils {
     }
     
     static Collection<String> combineNotConflicted(Collection<String> aArr, Collection<String> bArr){
-        System.out.print("Combine "+aArr.size()+":"+bArr.size());
+        System.out.println("Combine "+aArr.size()+":"+bArr.size());
         ConsolidateSet result = new ConsolidateSet( aArr.size() + bArr.size() );
         
+        int i=0,j=0;
+        
         for(String aVariant:aArr ){
+            System.out.printf("\rCombine  "+i+":"+j+":"+result.size());
+            i++;
+            j=0;
             for(String bVariant:bArr ){
                 String combined = combine(aVariant, bVariant);
                 if (combined!=null) result.consolidate(combined);
+                j++;
             }    
         }
         System.out.println("-->"+result.size());
@@ -68,12 +74,14 @@ public class Utils {
     
     
     static Collection<String> removeDupes(Collection<String> aArr, Collection<String> bArr){
-        System.out.print("RemoveDupes "+aArr.size()+":"+bArr.size());
+        int tSize=aArr.size()+bArr.size();
+        System.out.print("rd "+aArr.size()+":"+bArr.size());
         ConsolidateSet result = new ConsolidateSet( aArr.size()+bArr.size() );
-        //result.consolidate(aArr);
-        result.addAll(aArr);
+        result.consolidate(aArr);
+        //result.addAll(aArr);
         result.consolidate(bArr);
-        System.out.println("-->"+result.size());
+        if (result.size()<tSize) System.out.println("Real RemoveDupes! -> "+result.size() );
+        else System.out.println("-->"+result.size());
         return result;
     }
 
