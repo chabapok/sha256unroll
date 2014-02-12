@@ -9,7 +9,7 @@ import static sha256unroll.Utils.mayConverted;
  *
  * @author chabapok
  */
-public class ConsolidateSet extends ArrayList<String> {
+public class ConsolidateSet extends ArrayList<byte[]> {
 
     ConsolidateSet() {
         super();
@@ -20,27 +20,27 @@ public class ConsolidateSet extends ArrayList<String> {
     }
 
     void consolidate(String... args) {
-        ArrayList<String> al = new ArrayList(Arrays.asList(args));
+        ArrayList<byte[]> al = new ArrayList(Arrays.asList(args));
         consolidateArr(al);
     }
 
     
-    void consolidateArr(Collection<String> arr) {
-        for(String s:arr){
+    void consolidateArr(Collection<byte[]> arr) {
+        for(byte[] s:arr){
             consolidate(s);
         }
     }
     
-    void consolidate(String v) {
+    void consolidate(byte[] v) {
         if (isEmpty()){
             add(v);
             return; 
         }
         
         for(int i=0; i<size(); i++){
-            String s = get(i);
+            byte[] s = get(i);
             
-            String sf = calcSetOf(v, s);
+            byte[] sf = calcSetOf(v, s);
             if (sf!=null){
                 set(i, sf);
                 return;
@@ -50,36 +50,7 @@ public class ConsolidateSet extends ArrayList<String> {
         return;
     }
 
-    /*
-    void consolidate(Collection<String> arr) {
-        // System.out.println("Consolidate size="+arr.size()+":"+this.size() );
-        ArrayList<String> arrToAdd = new ArrayList(arr.size() + size());
-        arrToAdd.addAll(arr);
-
-        if (isEmpty() && !arrToAdd.isEmpty()) {
-            String s = arrToAdd.remove(arrToAdd.size() - 1);
-            add(s);
-        }
-
-        metka:
-        for (int j = 0; j < arrToAdd.size(); j++) {
-            String addV = arrToAdd.get(j);
-
-            for (int i = 0; i < size(); i++) {
-                String presentV = get(i);
-                String sf = calcSetOf(presentV, addV);
-                if (sf != null) {
-                    remove(i);
-                    arrToAdd.add(sf);
-                    continue metka;
-                }
-            }
-            add(addV);
-        }
-    }
-*/
-    
-    
+  
     static int counter = 0;
 
     /**
@@ -103,8 +74,8 @@ public class ConsolidateSet extends ArrayList<String> {
      * @param b
      * @return
      */
-    private String calcSetOf(String aStr, String bStr) {
-        if (aStr.length() == bStr.length()) {
+    private byte[] calcSetOf(byte[] aStr, byte[] bStr) {
+        if (aStr.length == bStr.length) {
 
             //counter++;
             //if ((counter%100000)==0)
@@ -112,9 +83,9 @@ public class ConsolidateSet extends ArrayList<String> {
             boolean aSetofB = true;
             boolean bSetofA = true;
 
-            for (int i = 0; i < aStr.length(); i++) {
-                char a = aStr.charAt(i);
-                char b = bStr.charAt(i);
+            for (int i = 0; i < aStr.length; i++) {
+                byte a = aStr[i];
+                byte b = bStr[i];
                 //проверка, что а - все еще надмножество (и значит б-подмножесто)
                 if (a != b) {
                     if (a != '*') {

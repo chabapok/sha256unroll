@@ -18,12 +18,12 @@ public class EndNode extends Node{
     }
 
     @Override
-    public Collection<String> probeVal(char v) {
-        char[] varStarts = varManager.getConditionsForVar(index, v);
+    public Collection<byte[]> probeVal(byte v) {
+        byte[] varStarts = varManager.getConditionsForVar(index, v);
         
         if (varStarts!=null){
-            ArrayList<String> result = new ArrayList(1);
-            result.add(String.valueOf(varStarts) );
+            ArrayList<byte[]> result = new ArrayList(1);
+            result.add(varStarts);
             return result;
         }else{
             return new ArrayList(0);
@@ -31,19 +31,23 @@ public class EndNode extends Node{
         
     }
     
-    public void init(char v){
+    public void init(byte v){
         varManager.init(index, v);
+    }
+    
+    public void init(char v){
+        varManager.init(index, (byte)(v&0xff));
     }
     
     
     @Override
-    char calc(){
+    byte calc(){
         return varManager.get(index);
     }
     
     @Override
     boolean isConst(){
-        char c = varManager.get(index);
+        byte c = varManager.get(index);
         return c!= '*';
     }
     

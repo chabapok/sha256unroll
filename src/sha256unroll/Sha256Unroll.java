@@ -61,14 +61,21 @@ public class Sha256Unroll {
         
         String hash = "d7a8fbb307d7809469ca9abcb0082e4f8d5651e46d3cdb762d02d0bf37c9e592";
         byte[] bhash = Utils.fromHexString(hash);
-        char[] bits = Utils.getBitset(bhash);
+        byte[] bits = Utils.getBitset(bhash);
         
-
-        Collection<String> result = Utils.probeVal(bits, digest);
+        long t1 =System.currentTimeMillis();
+        Collection<byte[]> result = Utils.probeVal(bits, digest);
+        long diff = System.currentTimeMillis()-t1;
+        System.out.println("diff="+diff+"ms");
         
         
-        for(String variant: result){
-            System.out.println(variant);
+        for(byte[] bb: result){
+            String variant = new String(bb);
+            System.out.println( variant );
+            int c =parse(variant) ;
+            System.out.println(c);
+            System.out.println((char)c);
+            
         }
         
         
@@ -204,11 +211,11 @@ public class Sha256Unroll {
 
     static void printVariants(Node result) {
         long t1 = System.nanoTime();
-        Collection<String> variants0 = result.probeVal('0');
+        Collection<byte[]> variants0 = result.probeVal((byte)'0');
         long t2 = System.nanoTime();
         System.out.println("v0=" + variants0);
         long t3 = System.nanoTime();
-        Collection<String> variants1 = result.probeVal('1');
+        Collection<byte[]> variants1 = result.probeVal((byte)'1');
         long t4 = System.nanoTime();
         System.out.println("v1=" + variants1);
         
@@ -240,9 +247,10 @@ public class Sha256Unroll {
 
         Bits32 r = add(v1, v2);
         
-        Collection<String> res = r.probeVal(p1);
+        Collection<byte[]> res = r.probeVal(p1);
         
-        for (String variant : res) {
+        for (byte[] b : res) {
+            String variant = new String(b);
             String[] toks = Bits32.split(variant);
             for (String tok : toks) {
                 System.out.print(parse(tok));
@@ -262,7 +270,7 @@ public class Sha256Unroll {
                 representation = "0" + representation;
             }
             vm.init(representation);
-            char r = result.calc();
+            byte r = result.calc();
             System.out.println(representation + "|" + r);
         }
         vm.reset();

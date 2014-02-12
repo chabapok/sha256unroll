@@ -19,32 +19,31 @@ public class VariableManager {
     }
     
     
-    private char[] initialConditions;
-    Collection<String> initialCond;
+    private byte[] initialConditions;
+    Collection<byte[]> initialCond;
     
     
     private VariableManager(int varCount){
-        initialConditions = new char[varCount];
-        Arrays.fill(initialConditions, '*');
+        initialConditions = new byte[varCount];
+        Arrays.fill(initialConditions, (byte)'*');
         recalcInitialCond();
     }
 
     
     void recalcInitialCond(){
-        String v=String.valueOf(initialConditions);
         initialCond = new ArrayList();
-        initialCond.add(v);
+        initialCond.add(initialConditions);
         //initialCond = Collections.unmodifiableCollection(initialCond);
     }
     
     
-    Collection<String> getInitial(){
+    Collection<byte[]> getInitial(){
         return initialCond;
     }
     
     
-    char[] getConditionsForVar(int varnum, char value){
-        char[] cond = Arrays.copyOf(initialConditions, initialConditions.length);
+    byte[] getConditionsForVar(int varnum, byte value){
+        byte[] cond = Arrays.copyOf(initialConditions, initialConditions.length);
         if(Utils.mayConverted(initialConditions[varIndex(varnum)], value)){
             cond[varIndex(varnum)] = value;
             return cond;
@@ -53,7 +52,7 @@ public class VariableManager {
         }
     }
     
-    char get(int varnum) {
+    byte get(int varnum) {
         return initialConditions[varIndex(varnum)];
     }
 
@@ -84,24 +83,28 @@ public class VariableManager {
 
     
     ConstNode constNode(char v){
+        return constNode((byte)v);
+    }
+    
+    ConstNode constNode(byte v){
         ConstNode n = new ConstNode(v);
         n.varManager = this;
         return n;
     }
     
     
-    void init(int varnum, char v) {
+    void init(int varnum, byte v) {
         initialConditions[varIndex(varnum)] = v;
         recalcInitialCond();
     }
 
     void init(String vars){
-        initialConditions = vars.toCharArray();
+        initialConditions = vars.getBytes();
         recalcInitialCond();
     }
     
     void reset(){
-        Arrays.fill(initialConditions, '*');
+        Arrays.fill(initialConditions, (byte)'*');
         recalcInitialCond();
     }
     

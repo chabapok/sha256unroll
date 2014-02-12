@@ -12,27 +12,27 @@ import java.util.Set;
  */
 public class Utils {
     
-    static char not(char v){
+    static byte not(byte v){
         if (v=='*') return '*';
         if (v=='1') return '0';
         return '1';
     }
     
     //"a" может превращаться в "b"
-    static boolean mayConverted(char a, char b) {
+    static boolean mayConverted(byte a, byte b) {
         return a==b || (a=='*');
     }
     
-    
+/*    
     static Collection<String> combineNotConflicted(Collection<String> aArr, Collection<String> bArr, Collection<String> cArr){
         Collection<String> rr = combineNotConflicted(aArr, bArr);
         Collection<String> r = combineNotConflicted(rr, cArr);
         return r;
     }
-    
+  */  
     static int counter=0;
     
-    static Collection<String> combineNotConflicted(Collection<String> aArr, Collection<String> bArr){
+    static Collection<byte[]> combineNotConflicted(Collection<byte[]> aArr, Collection<byte[]> bArr){
         /*
         counter++;
         if ((counter%1000)==0)
@@ -42,12 +42,12 @@ public class Utils {
         
         int i=0,j=0;
         
-        for(String aVariant:aArr ){
+        for(byte[] aVariant:aArr ){
             //System.out.printf("\rCombine  "+i+":"+j+":"+result.size());
             i++;
             j=0;
-            for(String bVariant:bArr ){
-                String combined = combine(aVariant, bVariant);
+            for(byte[] bVariant:bArr ){
+                byte[] combined = combine(aVariant, bVariant);
                 if (combined!=null) result.consolidate(combined);
                 j++;
             }    
@@ -68,31 +68,31 @@ public class Utils {
      * @param bVariant
      * @return 
      */
-    static String combine(String aVariant, String bVariant) {
-        if (aVariant.length()!=bVariant.length()) throw new RuntimeException("Length not same! "+aVariant+":"+bVariant);
+    static byte[] combine(byte[] aVariant, byte[] bVariant) {
+        if (aVariant.length!=bVariant.length) throw new RuntimeException("Length not same! "+aVariant+":"+bVariant);
         
-        StringBuilder sb = new StringBuilder(aVariant.length());
+        byte[] sb = new byte[aVariant.length];
         
-        for(int i=0; i<aVariant.length(); i++){
-            char a = aVariant.charAt(i);
-            char b = bVariant.charAt(i);
+        for(int i=0; i<aVariant.length; i++){
+            byte a = aVariant[i];
+            byte b = bVariant[i];
             
-            if (a=='*') {sb.append(b); continue;}
-            if (b=='*') {sb.append(a); continue;}
-            if (a==b) {sb.append(a); continue;}
+            if (a=='*') {sb[i]=b; continue;}
+            if (b=='*' || a==b) {sb[i]=a; continue;}
             return null; //01 or 10
         }
-        return sb.toString();
+        return sb;
     }
     
-    
+    /*
     static Collection<String> removeDupes(Collection<String> aArr, Collection<String> bArr, Collection<String> cArr){
         Collection<String> rr = removeDupes(aArr, bArr);
         Collection<String> r = removeDupes(rr, cArr);
         return r;
     }
+    */
     
-    static Collection<String> removeDupes(Collection<String> aArr, Collection<String> bArr){
+    static Collection<byte[]> removeDupes(Collection<byte[]> aArr, Collection<byte[]> bArr){
         int tSize=aArr.size()+bArr.size();
         //System.out.print("rd "+aArr.size()+":"+bArr.size());
         ConsolidateSet result = new ConsolidateSet( aArr.size()+bArr.size() );
@@ -190,15 +190,15 @@ public class Utils {
         return result;
     }
     
-    static char[] getBitset(byte[] arr){
+    static byte[] getBitset(byte[] arr){
         
-        char[] result = new char[arr.length*8];
+        byte[] result = new byte[arr.length*8];
         
         for(int i=0; i<arr.length; i++){
             byte a = arr[i];
             for(int j=0; j<8; j++){
                 
-                char bit = ((a&1) == 0)? '0' : '1';
+                byte bit = ((a&1) == 0)? (byte)'0' : (byte)'1';
                 result[i*8+j] = bit;
                 
                 a = (byte) (a>>>1);
@@ -207,18 +207,18 @@ public class Utils {
         return result;
     }
     
-    static Collection<String> probeVal(char[] needValues, Bits8[] arr){
+    static Collection<byte[]> probeVal(byte[] needValues, Bits8[] arr){
         Node[] nodes = consolidate(arr);
         if (needValues.length != nodes.length) 
             throw new RuntimeException("Wrong lengths. NeedValues.len="+needValues.length+" and arr.size="+nodes.length+"bits");
         
         
-        Collection<String> results = null;
+        Collection<byte[]> results = null;
         for(int i=0; i<nodes.length; i++){
             
             System.out.printf("Probe node [%d/%d]\n", i, nodes.length );
             if (needValues[i]=='*') continue;
-            Collection<String> variants = nodes[i].probeVal( needValues[i] );
+            Collection<byte[]> variants = nodes[i].probeVal( needValues[i] );
             
             if (results==null){
                 results = variants;

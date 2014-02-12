@@ -37,7 +37,7 @@ public class Bits8 {
         int v =0;
         for(int i=0; i<8; i++){
             //System.out.println("calc "+name+"."+i);
-            char r = nodes[i].calc();
+            byte r = nodes[i].calc();
             v = v>>>1;
             if(r=='1') v = v | 128;
             else if (r!='0') System.out.println("Warn "+r);

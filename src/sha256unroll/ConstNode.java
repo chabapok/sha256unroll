@@ -11,16 +11,16 @@ import java.util.Collections;
 public class ConstNode extends Node{  
     
     VariableManager varManager;
-    char needVal;
+    byte needVal;
     
-    ConstNode(char v){
+    ConstNode(byte v){
         super('c', null);
         needVal = v;
     }
 
 
     @Override
-    public Collection<String> probeVal(char v) {
+    public Collection<byte[]> probeVal(byte v) {
         return v==needVal ? varManager.getInitial() : Collections.EMPTY_LIST;
     }
     
@@ -29,7 +29,7 @@ public class ConstNode extends Node{
     
     
     @Override
-    char calc(){
+    byte calc(){
         //System.out.println("calc in node "+num);
         /*
         try{

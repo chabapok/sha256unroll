@@ -119,16 +119,16 @@ public class Bits32{
         return b;
     }
     
-    Collection<String> probeVal(int v){
+    Collection<byte[]> probeVal(int v){
         
-        char[] ch = new char[32];
+        byte[] ch = new byte[32];
         for(int i=0; i<32; i++){
-            ch[i] =  ((v&1) == 1)? '1' : '0';
+            ch[i] =  ((v&1) == 1)? (byte)'1' : (byte)'0';
             v = v>>>1;
         }
-        Collection<String> results = null;
+        Collection<byte[]> results = null;
         for(int i=0; i<32; i++){
-            Collection<String> variants = nodes[i].probeVal( ch[i] );
+            Collection<byte[]> variants = nodes[i].probeVal( ch[i] );
             
             if (results==null){
                 results = variants;
@@ -141,14 +141,14 @@ public class Bits32{
     
     
     int calc(){
-       char[] values = calcBinary();
+       byte[] values = calcBinary();
        String result = String.valueOf(values);
        int r = Integer.parseInt(result, 2);
        return r;
     }
     
-    char[] calcBinary(){
-       char[] values = new char[32];
+    byte[] calcBinary(){
+       byte[] values = new byte[32];
        for(int i=0; i<32; i++){
            values[31-i] = nodes[i].calc();
        }

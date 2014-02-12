@@ -86,12 +86,12 @@ public class Node {
         }
     }
     
-    Collection<String> if0=null;
-    Collection<String> if1=null;
+    Collection<byte[]> if0=null;
+    Collection<byte[]> if1=null;
     
     static long lastTrace=0;
     
-    public Collection<String> probeVal(char v){
+    public Collection<byte[]> probeVal(byte v){
         if (v=='*') throw new RuntimeException("Зачем тогда звать? неважно же! "+name);
         
         if (v=='0'){ 
@@ -114,10 +114,10 @@ public class Node {
     }
     
     
-    private Collection<String> probeValImpl(char v){
+    private Collection<byte[]> probeValImpl(byte v){
         
         
-        Collection<String> c;
+        Collection<byte[]> c;
         switch(operation){
             case '!': c = not(v); break;
             case '+': c = or(v); break;
@@ -132,59 +132,59 @@ public class Node {
         return c;
     }
 
-    private Collection<String> not(char v) {
-        Collection<String> fromUp = a.probeVal( Utils.not(v) );
+    private Collection<byte[]> not(byte v) {
+        Collection<byte[]> fromUp = a.probeVal( Utils.not(v) );
         return fromUp;
     }
     
-    private Collection<String> or(char v) {
-        Collection<String> aArr = a.probeVal(v);
-        Collection<String> bArr = b.probeVal(v);
+    private Collection<byte[]> or(byte v) {
+        Collection<byte[]> aArr = a.probeVal(v);
+        Collection<byte[]> bArr = b.probeVal(v);
 
         if (v=='0'){
-            Collection<String> result = combineNotConflicted(aArr, bArr);
+            Collection<byte[]> result = combineNotConflicted(aArr, bArr);
             return result;
             
         }else{
             
-            Collection<String> result = removeDupes(aArr, bArr);
+            Collection<byte[]> result = removeDupes(aArr, bArr);
             return result;
         }
     }
 
-    private Collection<String> and(char v) {
-        Collection<String> aArr = a.probeVal(v);
-        Collection<String> bArr = b.probeVal(v);
+    private Collection<byte[]> and(byte v) {
+        Collection<byte[]> aArr = a.probeVal(v);
+        Collection<byte[]> bArr = b.probeVal(v);
 
         if (v=='1'){
-            Collection<String> result = combineNotConflicted(aArr, bArr);
+            Collection<byte[]> result = combineNotConflicted(aArr, bArr);
             return result;
         }else{
-            Collection<String> result = removeDupes(aArr, bArr);
+            Collection<byte[]> result = removeDupes(aArr, bArr);
             return result;
         }
     }
 
-    private Collection<String> xor(char v) {
+    private Collection<byte[]> xor(byte v) {
         
-        Collection<String> aArr0 = a.probeVal('0');
-        Collection<String> bArr0 = b.probeVal('0');
-        Collection<String> aArr1 = a.probeVal('1');
-        Collection<String> bArr1 = b.probeVal('1');
+        Collection<byte[]> aArr0 = a.probeVal((byte)'0');
+        Collection<byte[]> bArr0 = b.probeVal((byte)'0');
+        Collection<byte[]> aArr1 = a.probeVal((byte)'1');
+        Collection<byte[]> bArr1 = b.probeVal((byte)'1');
         
         if (v=='0'){            
-            Collection<String> result0 = combineNotConflicted(aArr0, bArr0);
-            Collection<String> result1 = combineNotConflicted(aArr1, bArr1);
+            Collection<byte[]> result0 = combineNotConflicted(aArr0, bArr0);
+            Collection<byte[]> result1 = combineNotConflicted(aArr1, bArr1);
 
-            Collection<String> result = removeDupes(result0, result1);
+            Collection<byte[]> result = removeDupes(result0, result1);
             return result;
             
         }else{
             
-            Collection<String> result0 = combineNotConflicted(aArr0, bArr1);
-            Collection<String> result1 = combineNotConflicted(aArr1, bArr0);
+            Collection<byte[]> result0 = combineNotConflicted(aArr0, bArr1);
+            Collection<byte[]> result1 = combineNotConflicted(aArr1, bArr0);
 
-            Collection<String> result = removeDupes(result0, result1);
+            Collection<byte[]> result = removeDupes(result0, result1);
             return result;
         }
     }
@@ -193,17 +193,17 @@ public class Node {
     boolean isConst(){return false;}
     
     
-    char v='x';
-    char calc(){
+    byte v='x';
+    byte calc(){
         if (v=='x') v = calcImpl();
         return v;
     }
     
-    private char calcImpl(){
+    private byte calcImpl(){
         //System.out.println("calc in node "+num);
-        char aResult = a.calc();
+        byte aResult = a.calc();
         if (operation=='!') return Utils.not(aResult);
-        char bResult = b.calc();
+        byte bResult = b.calc();
         
         switch(operation){
             case '+': 
@@ -226,7 +226,7 @@ public class Node {
                 return '?';
                 
             case 'C':
-                char cResult = c.calc();
+                byte cResult = c.calc();
                 if (
                         (aResult=='1' && bResult=='1') ||
                         (cResult=='1' && bResult=='1') ||
@@ -247,71 +247,75 @@ public class Node {
     
     
     
-    private Collection<String> carry(char v) {
-        Collection<String> a0 = a.probeVal('0');
-        Collection<String> a1 = a.probeVal('1');
+    private Collection<byte[]> carry(byte v) {
+        /*
+        Collection<byte[]> a0 = a.probeVal((byte)'0');
+        Collection<byte[]> a1 = a.probeVal((byte)'1');
         
-        Collection<String> b0 = b.probeVal('0');
-        Collection<String> b1 = b.probeVal('1');
+        Collection<byte[]> b0 = b.probeVal((byte)'0');
+        Collection<byte[]> b1 = b.probeVal((byte)'1');
 
-        Collection<String> c0 = c.probeVal('0');
-        Collection<String> c1 = c.probeVal('1');
+        Collection<byte[]> c0 = c.probeVal((byte)'0');
+        Collection<byte[]> c1 = c.probeVal((byte)'1');
         
         if (v=='0'){
-            Collection<String> r0 = combineNotConflicted(a0, b0, c0);
-            Collection<String> r1 = combineNotConflicted(a0, b1, c0);
-            Collection<String> r2 = combineNotConflicted(a1, b0, c0);
-            Collection<String> r3 = combineNotConflicted(a0, b0, c1);
+            Collection<byte[]> r0 = combineNotConflicted(a0, b0, c0);
+            Collection<byte[]> r1 = combineNotConflicted(a0, b1, c0);
+            Collection<byte[]> r2 = combineNotConflicted(a1, b0, c0);
+            Collection<byte[]> r3 = combineNotConflicted(a0, b0, c1);
             
-            Collection<String> r4 = removeDupes(r0, r1);
-            Collection<String> r5 = removeDupes(r2, r3);
-            Collection<String> r6 = removeDupes(r4, r5);
+            Collection<byte[]> r4 = removeDupes(r0, r1);
+            Collection<byte[]> r5 = removeDupes(r2, r3);
+            Collection<byte[]> r6 = removeDupes(r4, r5);
             return r6;            
         }else{
-            Collection<String> r0 = combineNotConflicted(a1, b1, c0);
-            Collection<String> r1 = combineNotConflicted(a0, b1, c1);
-            Collection<String> r2 = combineNotConflicted(a1, b0, c1);
-            Collection<String> r3 = combineNotConflicted(a1, b1, c1);
+            Collection<byte[]> r0 = combineNotConflicted(a1, b1, c0);
+            Collection<byte[]> r1 = combineNotConflicted(a0, b1, c1);
+            Collection<byte[]> r2 = combineNotConflicted(a1, b0, c1);
+            Collection<byte[]> r3 = combineNotConflicted(a1, b1, c1);
             
-            Collection<String> r4 = removeDupes(r0, r1);
-            Collection<String> r5 = removeDupes(r2, r3);
-            Collection<String> r6 = removeDupes(r4, r5);
+            Collection<byte[]> r4 = removeDupes(r0, r1);
+            Collection<byte[]> r5 = removeDupes(r2, r3);
+            Collection<byte[]> r6 = removeDupes(r4, r5);
             return r6;            
-        }
+        }*/
+        return null;
     }
     
     
-    private Collection<String> sum(char v) {
-
-        Collection<String> a0 = a.probeVal('0');
-        Collection<String> a1 = a.probeVal('1');
+    private Collection<byte[]> sum(byte v) {
+/*
+        Collection<byte[]> a0 = a.probeVal('0');
+        Collection<byte[]> a1 = a.probeVal('1');
         
-        Collection<String> b0 = b.probeVal('0');
-        Collection<String> b1 = b.probeVal('1');
+        Collection<byte[]> b0 = b.probeVal('0');
+        Collection<byte[]> b1 = b.probeVal('1');
 
-        Collection<String> c0 = c.probeVal('0');
-        Collection<String> c1 = c.probeVal('1');
+        Collection<byte[]> c0 = c.probeVal('0');
+        Collection<byte[]> c1 = c.probeVal('1');
         
         if (v=='0'){
-            Collection<String> r0 = combineNotConflicted(a0, b0, c0);
-            Collection<String> r1 = combineNotConflicted(a1, b1, c0);
-            Collection<String> r2 = combineNotConflicted(a0, b1, c1);
-            Collection<String> r3 = combineNotConflicted(a1, b0, c1);
+            Collection<byte[]> r0 = combineNotConflicted(a0, b0, c0);
+            Collection<byte[]> r1 = combineNotConflicted(a1, b1, c0);
+            Collection<byte[]> r2 = combineNotConflicted(a0, b1, c1);
+            Collection<byte[]> r3 = combineNotConflicted(a1, b0, c1);
             
-            Collection<String> r4 = removeDupes(r0, r1);
-            Collection<String> r5 = removeDupes(r2, r3);
-            Collection<String> r6 = removeDupes(r4, r5);
+            Collection<byte[]> r4 = removeDupes(r0, r1);
+            Collection<byte[]> r5 = removeDupes(r2, r3);
+            Collection<byte[]> r6 = removeDupes(r4, r5);
             return r6;
         }else{
-            Collection<String> r0 = combineNotConflicted(a0, b1, c0);
-            Collection<String> r1 = combineNotConflicted(a1, b0, c0);
-            Collection<String> r2 = combineNotConflicted(a0, b0, c1);
-            Collection<String> r3 = combineNotConflicted(a1, b1, c1);
+            Collection<byte[]> r0 = combineNotConflicted(a0, b1, c0);
+            Collection<byte[]> r1 = combineNotConflicted(a1, b0, c0);
+            Collection<byte[]> r2 = combineNotConflicted(a0, b0, c1);
+            Collection<byte[]> r3 = combineNotConflicted(a1, b1, c1);
             
-            Collection<String> r4 = removeDupes(r0, r1);
-            Collection<String> r5 = removeDupes(r2, r3);
-            Collection<String> r6 = removeDupes(r4, r5);
+            Collection<byte[]> r4 = removeDupes(r0, r1);
+            Collection<byte[]> r5 = removeDupes(r2, r3);
+            Collection<byte[]> r6 = removeDupes(r4, r5);
             return r6;
         }
+        */
+        return null;
     }
 }
