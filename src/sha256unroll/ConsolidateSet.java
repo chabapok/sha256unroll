@@ -21,15 +21,36 @@ public class ConsolidateSet extends ArrayList<String> {
 
     void consolidate(String... args) {
         ArrayList<String> al = new ArrayList(Arrays.asList(args));
-        consolidate(al);
+        consolidateArr(al);
     }
 
+    
+    void consolidateArr(Collection<String> arr) {
+        for(String s:arr){
+            consolidate(s);
+        }
+    }
+    
     void consolidate(String v) {
-        ArrayList al = new ArrayList(1);
-        al.add(v);
-        consolidate(al);
+        if (isEmpty()){
+            add(v);
+            return; 
+        }
+        
+        for(int i=0; i<size(); i++){
+            String s = get(i);
+            
+            String sf = calcSetOf(v, s);
+            if (sf!=null){
+                set(i, sf);
+                return;
+            }
+        }
+        add(v);
+        return;
     }
 
+    /*
     void consolidate(Collection<String> arr) {
         // System.out.println("Consolidate size="+arr.size()+":"+this.size() );
         ArrayList<String> arrToAdd = new ArrayList(arr.size() + size());
@@ -56,7 +77,9 @@ public class ConsolidateSet extends ArrayList<String> {
             add(addV);
         }
     }
-
+*/
+    
+    
     static int counter = 0;
 
     /**

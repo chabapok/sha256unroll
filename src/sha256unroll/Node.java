@@ -94,16 +94,16 @@ public class Node {
         
         if (v=='0'){ 
             if (if0==null) {
-                System.out.print("probe 0 for node "+nodeNum+"  level="+level);System.out.flush();
+                //System.out.print("probe 0 for node "+nodeNum+"  level="+level);System.out.flush();
                 if0 = probeValImpl(v);
-                System.out.println(" if0 size= "+if0.size());
+                //System.out.println(" if0 size= "+if0.size());
             }
             return if0;
         }
         if (if1==null){
-            System.out.print("probe 1 for node "+nodeNum+"  level="+level );System.out.flush();
+            //System.out.print("probe 1 for node "+nodeNum+"  level="+level );System.out.flush();
             if1 = probeValImpl(v);
-            System.out.println(" if1 size= "+if1.size());
+           // System.out.println(" if1 size= "+if1.size());
         }
         return if1;
     }
