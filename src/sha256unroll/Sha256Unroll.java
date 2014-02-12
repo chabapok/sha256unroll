@@ -24,7 +24,7 @@ public class Sha256Unroll {
     
     
     
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main0(String[] args) throws NoSuchAlgorithmException {
         
         String pass ="The quick brown fox jumps over the lazy dog";
         int symCount = pass.length();
@@ -225,28 +225,27 @@ public class Sha256Unroll {
     }
     
     
-    public static void main9(String [] arg){
+    public static void main(String [] arg){
         VariableManager vars = VariableManager.create(32);
 
-        Bits32 v1 = Bits32.create(20);
+        int p = 0x3ff;
+        int p1 =0x5fff;
+        Bits32 v1 = Bits32.create(p);
         Bits32 v2 = Bits32.createVar();
 
         Bits32 r = add(v1, v2);
-
-        r.probeVal(1233);
         
-        long t1=System.nanoTime();
-        Collection<String> res = r.probeVal(1234);
-        long d = System.nanoTime()-t1;
+        Collection<String> res = r.probeVal(p1);
         
         for (String variant : res) {
             String[] toks = Bits32.split(variant);
             for (String tok : toks) {
-                System.out.print(Integer.parseInt(tok, 2) + " ");
+                System.out.print(parse(tok));
             }
             System.out.println("");
         }
-        System.out.println("time="+d);
+        System.out.println("r="+(p1-p));
+        
     }
     
     
@@ -264,4 +263,14 @@ public class Sha256Unroll {
         vm.reset();
     }
 
+    
+    static int parse(String v){
+        int r = 0;
+        for(char c:v.toCharArray()){
+            if (c=='1') r = (r<<1)|1;
+            else r = r<<1;
+        }
+        return r;
+    }
+    
 }
