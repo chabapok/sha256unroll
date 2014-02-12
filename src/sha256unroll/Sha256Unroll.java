@@ -206,9 +206,8 @@ public class Sha256Unroll {
     }
 
     
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main8(String[] args) throws NoSuchAlgorithmException {
         
-                
         VariableManager vars = VariableManager.create(3);
 
         EndNode x1 = vars.node(0);
@@ -218,6 +217,25 @@ public class Sha256Unroll {
         //Node m1 = sum(x1, x2, x3);
         Node m1 = carry(x1, x2, x3);
         printVariants(m1);
+    }
+    
+    
+    public static void main(String [] arg){
+        VariableManager vars = VariableManager.create(32);
+
+        Bits32 v1 = Bits32.create(20);
+        Bits32 v2 = Bits32.createVar();
+
+        Bits32 r = add(v1, v2);
+
+        Collection<String> res = r.probeVal(1235);
+        for (String variant : res) {
+            String[] toks = Bits32.split(variant);
+            for (String tok : toks) {
+                System.out.print(Integer.parseInt(tok, 2) + " ");
+            }
+            System.out.println("");
+        }
     }
     
     

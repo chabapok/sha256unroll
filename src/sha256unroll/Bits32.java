@@ -99,6 +99,26 @@ public class Bits32{
     }
     
     
+    
+    Bits32 add1( Bits32 v2 ){
+        Bits32 b = new Bits32();
+        Node carry=null;
+        for(int i=0; i<32; i++){
+            if (carry==null)
+                b.nodes[i] = Utils.xor(nodes[i], v2.nodes[i]);
+            else
+                b.nodes[i] = Utils.sum(nodes[i], v2.nodes[i], carry);
+            
+            
+            if (carry==null && i!=31){
+                carry = Utils.and(nodes[i], v2.nodes[i]);
+            }else{
+                carry = Utils.carry(nodes[i], v2.nodes[i], carry);
+            }
+        }
+        return b;
+    }
+    
     Collection<String> probeVal(int v){
         
         char[] ch = new char[32];
