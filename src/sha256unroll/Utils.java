@@ -118,6 +118,21 @@ public class Utils {
     static Node or(Node ... args){  return op('+', args); }
     static Node and(Node ... args){ return op('*', args); }
     static Node xor(Node ... args){ return op('^', args); }
+    
+    /*
+    //так дольше
+    static Node xor(Node a, Node b){ 
+        Node v1=and(a, not(b));
+        Node v2=and(b, not(a));
+        return or(v1, v2 );
+    }
+    
+    static Node xor(Node a, Node b, Node c){ 
+        Node v1=xor(a, b);
+        return xor(v1, c);
+    }
+    */
+    
     static Node not(Node arg){      return new Node('!', arg); }
     
     static Node sum(Node a, Node b, Node c){

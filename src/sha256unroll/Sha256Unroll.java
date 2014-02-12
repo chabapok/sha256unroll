@@ -198,11 +198,16 @@ public class Sha256Unroll {
     }
 
     static void printVariants(Node result) {
+        long t1 = System.nanoTime();
         Collection<String> variants0 = result.probeVal('0');
+        long t2 = System.nanoTime();
         System.out.println("v0=" + variants0);
-
+        long t3 = System.nanoTime();
         Collection<String> variants1 = result.probeVal('1');
+        long t4 = System.nanoTime();
         System.out.println("v1=" + variants1);
+        
+        System.out.println("time="+( (t2-t1)+(t4-t3) ) );
     }
 
     
@@ -228,7 +233,12 @@ public class Sha256Unroll {
 
         Bits32 r = add(v1, v2);
 
-        Collection<String> res = r.probeVal(1235);
+        r.probeVal(1233);
+        
+        long t1=System.nanoTime();
+        Collection<String> res = r.probeVal(1234);
+        long d = System.nanoTime()-t1;
+        
         for (String variant : res) {
             String[] toks = Bits32.split(variant);
             for (String tok : toks) {
@@ -236,6 +246,7 @@ public class Sha256Unroll {
             }
             System.out.println("");
         }
+        System.out.println("time="+d);
     }
     
     
