@@ -84,14 +84,15 @@ public class ConsolidateSet extends ArrayList<byte[]> {
             boolean bSetofA = true;
 
             int bitChange = -1;
+            byte z = '*';
             
             for (int i = 0; i < aStr.length; i++) {
                 byte a = aStr[i]; byte b = bStr[i];
                 if (a != b) {
-                    if (a != '*') bSetofA = false;
-                    if (b != '*') aSetofB = false;
+                    if (a != z) bSetofA = false;
+                    if (b != z) aSetofB = false;
                     
-                    if (a !='*' && b!='*'){
+                    if (a !=z && b!=z){
                         if (bitChange==-1){
                             bitChange = i;
                         }else{
@@ -104,7 +105,7 @@ public class ConsolidateSet extends ArrayList<byte[]> {
             }
             if (bitChange>=0){
                 byte[] b = aStr.clone();
-                b[bitChange] = (byte)'*';
+                b[bitChange] = z;
                 return b;
             }
             return aSetofB ? bStr : aStr;
