@@ -84,24 +84,14 @@ public class ConsolidateSet extends ArrayList<byte[]> {
             boolean bSetofA = true;
 
             for (int i = 0; i < aStr.length; i++) {
-                byte a = aStr[i];
-                byte b = bStr[i];
-                //проверка, что а - все еще надмножество (и значит б-подмножесто)
+                byte a = aStr[i]; byte b = bStr[i];
                 if (a != b) {
-                    if (a != '*') {
-                        bSetofA = false;
-                    }
-
-                    if (b != '*') {
-                        aSetofB = false;
-                    }
-
-                    if (!(bSetofA || aSetofB)) {
-                        return null;
-                    }
-                }
+                    if (a != '*') bSetofA = false;
+                    if (b != '*') aSetofB = false;
+                    if (!bSetofA && !aSetofB) return null;
+                }                
             }
-
+            
             return aSetofB ? bStr : aStr;
 
         } else {
