@@ -77,6 +77,57 @@ public class Bits32{
     }
     
     
+    Bits32 add1( Bits32 v2 ){
+        Bits32 r = new Bits32();
+        Node carry=null;
+        for(int i=0; i<32; i++){
+            Node a =nodes[i];
+            Node b =v2.nodes[i];
+            Node c = carry;
+            
+            if (carry==null){
+                
+                Node n1 = Utils.not(nodes[i]);
+                Node n2 = Utils.not(v2.nodes[i]);
+                
+                r.nodes[i] = Utils.or( Utils.and(nodes[i], n2), Utils.and(n1, v2.nodes[i]) );
+                carry = Utils.and(nodes[i], v2.nodes[i]);
+                
+            }else{
+            
+                
+                Node na = Utils.not(nodes[i]);
+                Node nb = Utils.not(v2.nodes[i]);
+                Node nc = Utils.not(c);
+                
+                Node x4 = Utils.and(na, b);
+                Node x3 = Utils.and(a, nb);
+                Node x2 = Utils.and(a, b);
+                Node x1 = Utils.and(x2, c);
+                
+                Node xx1= Utils.and(na,nb);
+                Node xx = Utils.and(c, xx1);
+                Node gg = Utils.and(nc, x3);
+                Node pp = Utils.and(nc, x4);
+                
+                
+                Node vv =Utils.or(x4, x3);
+                Node aa = Utils.and(nc, vv);
+                r.nodes[i] = Utils.or(aa, xx, x1);
+                
+                Node cpp = Utils.and(nc, x2);
+                Node cgg = Utils.and(c, x4);
+                Node cxx = Utils.and(c, x3);
+                carry =Utils.or( Utils.and( c, vv), x2);
+            }
+ 
+            
+           
+        }
+        return r;
+    }
+    
+    
     Bits32 add( Bits32 v2 ){
         Bits32 b = new Bits32();
         Node carry=null;
@@ -100,7 +151,7 @@ public class Bits32{
     
     
     
-    Bits32 add1( Bits32 v2 ){
+    Bits32 add2( Bits32 v2 ){
         Bits32 b = new Bits32();
         Node carry=null;
         for(int i=0; i<32; i++){

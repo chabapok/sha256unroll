@@ -245,7 +245,7 @@ public class Sha256Unroll {
         Bits32 v1 = Bits32.create(p);
         Bits32 v2 = Bits32.createVar();
 
-        Bits32 r = add(v1, v2);
+        Bits32 r = v1.add(v2);
         
         Collection<byte[]> res = r.probeVal(p1);
         

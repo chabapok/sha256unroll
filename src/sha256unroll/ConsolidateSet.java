@@ -83,15 +83,30 @@ public class ConsolidateSet extends ArrayList<byte[]> {
             boolean aSetofB = true;
             boolean bSetofA = true;
 
+            int bitChange = -1;
+            
             for (int i = 0; i < aStr.length; i++) {
                 byte a = aStr[i]; byte b = bStr[i];
                 if (a != b) {
                     if (a != '*') bSetofA = false;
                     if (b != '*') aSetofB = false;
-                    if (!bSetofA && !aSetofB) return null;
+                    
+                    if (a !='*' && b!='*'){
+                        if (bitChange==-1){
+                            bitChange = i;
+                        }else{
+                            bitChange = -2;
+                        }
+                    }else{bitChange = -2;}
+                    
+                    if (!bSetofA && !aSetofB && bitChange==-2) return null;
                 }                
             }
-            
+            if (bitChange>=0){
+                byte[] b = aStr.clone();
+                b[bitChange] = (byte)'*';
+                return b;
+            }
             return aSetofB ? bStr : aStr;
 
         } else {
