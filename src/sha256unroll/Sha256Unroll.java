@@ -54,6 +54,8 @@ public class Sha256Unroll {
         System.out.println("Nodes notCount="+Node.notCount);
         System.out.println("Nodes eCount="+Node.eCount);
         System.out.println("Nodes cCount="+Node.cCount);
+        System.out.println("Nodes sumCount="+Node.sumCount);
+        System.out.println("Nodes carryCount="+Node.carryCount);
         
         System.out.println();
         System.out.println(hash256(pass));
@@ -89,7 +91,10 @@ public class Sha256Unroll {
         */
         
         
-        
+        System.out.println("max refCountCall="+Node.maxRefCount);
+        System.out.println("avgCount="+RefCountManager.calcAvg());
+        System.out.println("maxCount="+RefCountManager.calcMax());
+        RefCountManager.printCalcCountByCounts();
     }
     
     

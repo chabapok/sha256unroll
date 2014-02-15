@@ -3,7 +3,10 @@ package sha256unroll;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -53,6 +56,9 @@ public class Utils {
             }    
         }
         //System.out.println("-->"+result.size());
+        if (result.size()==111){
+            trace(result);
+        }
         return result;
     }
 
@@ -91,6 +97,36 @@ public class Utils {
         return r;
     }
     */
+    
+    
+    static void trace(Collection<byte[]> b){
+        
+        final Comparator<Object> c = new Comparator<Object>(){
+            @Override
+            public int compare(Object a, Object b) {
+                byte[] o1 = (byte[])a;
+                byte[] o2 = (byte[])b;
+                
+                for(int i=0; i<o1.length && i<o2.length; i++){
+                    if (o1[i]==o2[i]) continue;
+
+                    if (o2[i]=='1') return -1;
+                    if (o1[i]=='0') return -1;
+                    
+                    if (o1[i]=='1' ) return 1;
+                    if (o2[i]=='0') return 1;
+                }
+                return 0;
+            }
+        };
+        List bl = (List)b;
+        Collections.sort(bl, c);
+        
+        for(byte[] bb: b){
+            String s = new String(bb);
+            System.out.println(s);
+        }
+    }
     
     static Collection<byte[]> removeDupes(Collection<byte[]> aArr, Collection<byte[]> bArr){
         int tSize=aArr.size()+bArr.size();

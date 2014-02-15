@@ -60,6 +60,9 @@ public class Node {
             case 'S': sumCount++;break;
             case 'C': carryCount++;break;
         }
+        RefCountManager.incRefcount(a.nodeNum);
+        RefCountManager.incRefcount(b.nodeNum);
+        RefCountManager.incRefcount(c.nodeNum);
     }
     
     // or and xor
@@ -73,6 +76,10 @@ public class Node {
             case '^': xorCount++;break;
             case 'e': eCount++;break;
         }
+        if (p1!=null)
+        RefCountManager.incRefcount(p1.nodeNum);
+        if (p2!=null)
+        RefCountManager.incRefcount(p2.nodeNum);
     }
     
     //not
@@ -84,6 +91,8 @@ public class Node {
         else{
             cCount++;
         }
+        if (p1!=null)
+        RefCountManager.incRefcount(p1.nodeNum);
     }
     
     Collection<byte[]> if0=null;
@@ -91,8 +100,15 @@ public class Node {
     
     static long lastTrace=0;
     
+    static int maxRefCount=0;
+    int refCount=0;
+    
     public Collection<byte[]> probeVal(byte v){
         if (v=='*') throw new RuntimeException("Зачем тогда звать? неважно же! "+name);
+        
+        refCount++;
+        if (maxRefCount<refCount) maxRefCount=refCount;
+        
         
         if (v=='0'){ 
             if (if0==null) {
