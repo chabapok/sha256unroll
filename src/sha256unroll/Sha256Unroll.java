@@ -29,23 +29,33 @@ public class Sha256Unroll {
         String pass ="The quick brown fox jumps over the lazy dog";
         int symCount = pass.length();
         
+        //количество неизвестных букв
         int n=1;
-        VariableManager vm = VariableManager.create(n*8);
+        
+        VariableManager vm = VariableManager.create(n*8);//количество неизвестных бит
         
         System.out.println("Nodes eCount="+Node.eCount);
-        //Bits8 [] b = Utils.fromString(pass);
+        
+        //в байте ноль все биты - неизвестны
         Bits8 [] b0 = Utils.createXVars(n);
+        
+        //остальные биты считаем известными, поэтому их значения возьмем из иходной строки.
         Bits8[] b1 = Utils.fromString(pass.substring(b0.length));
         Bits8[] b = new Bits8[b0.length+b1.length];
         System.arraycopy(b0, 0, b, 0, b0.length);
         System.arraycopy(b1, 0, b, b0.length, b1.length);
         
+        //теперь у нас в b[]-- исходные данные
+        
         System.out.println("Nodes eCount="+Node.eCount);
         
+        //сконструируем граф
         Sha256 sha256 = new Sha256();
         sha256.update(b);
-        
+
         Bits8[] digest = sha256.digest();
+        
+        //выведем некоторую статистику для интереса
         System.out.println("digest calculated");
         System.out.println("Nodes allCount="+Node.allCount);
         System.out.println("Nodes andCount="+Node.andCount);
@@ -58,25 +68,30 @@ public class Sha256Unroll {
         System.out.println("Nodes carryCount="+Node.carryCount);
         
         System.out.println();
-        System.out.println(hash256(pass));
         
         
-        String hash = "d7a8fbb307d7809469ca9abcb0082e4f8d5651e46d3cdb762d02d0bf37c9e592";
+        //хеш от строки
+        String hash = hash256(pass); //"d7a8fbb307d7809469ca9abcb0082e4f8d5651e46d3cdb762d02d0bf37c9e592";
+        System.out.println(hash);
+        
         byte[] bhash = Utils.fromHexString(hash);
         byte[] bits = Utils.getBitset(bhash);
         
         long t1 =System.currentTimeMillis();
+        
+        //и наконец, посчитаем возможные значения наших переменных
         Collection<byte[]> result = Utils.probeVal(bits, digest);
         long diff = System.currentTimeMillis()-t1;
         System.out.println("diff="+diff+"ms");
         
+        //выведем то, что у нас вышло плюс некоторая статистика
         
         for(byte[] bb: result){
             String variant = new String(bb);
             System.out.println( variant );
             int c =parse(variant) ;
             System.out.println(c);
-            System.out.println((char)c);
+            System.out.println("Result is: "+(char)c +" !!!!!!");
             
         }
         
